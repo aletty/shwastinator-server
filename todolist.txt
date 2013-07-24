@@ -1,0 +1,49 @@
+todo:
+- Optimize pages for mobile
+- All time favorite Drinks
+  - for the whole Bar
+  - For Users
+- Drink Of the Night
+  - for the Whole Bar
+  - for users
+
+- Question for arjun - date.now() not viewable ..??
+
+- ALERTS - part of layout!!
+
+- edit drinks
+- view all users tabs  
+- Allow approved Users to add guests
+    ??? should guests be automatically approved????
+    
+- On the setup page have it default to the last liquid settings not just 'Empty'
+- Navbar active links
+- Keep people from making blank passwords
+- Only allowed to order drinks when you are approved
+- Max tab - then block from ordering
+- display only drinks that we have ingredients for
+- list ingredients in drinks on order page.....??????
+- Check for duplicate drinks, liquids, usernames
+- photoshop images to correct ratio
+
+???Tally marks for the night???be could cool... -> only visable to yourself..?
+- See Other User profiles
+- Create new Drinks
+????Cup size...?????
+???should we care about alch types??? ie cosik vs smirnoff..
+    if we have them as different prices they should still be able to me mixed into drinks that require vodka ..etc.
+
+
+
+
+Done
+- Admin Page to aprove new users
+- Keep people from having duplicate usernames
+- Admin page to change balance of users
+- Order Drinks
+- Fixed mobile view
+-add to package.json
+  mongoose
+  socket.io
+  bcrypt
+  async
