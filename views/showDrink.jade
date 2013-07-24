@@ -1,0 +1,6 @@
+ul.small-block-grid-2.large-block-grid-4
+  for drink in drinks
+    li
+      //- p #{drink.name}
+      img(src=drink.image, data-caption=drink.name).order.th
+      p #{drink.name}

@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  .row
+    .small-12.columns
+      .row
+        h3 Users That Are Not Approved:
+      for user in users
+        .row(id='#{user.name}')
+          .small-6.columns#users
+            p #{user.name}
+          .small-6.columns
+            .button.small.approve(name='#{user.name}') Approve!
+
+  script
+    $('.approve').click(function(){
+      console.log($(this).attr('name'));
+      $.post('/approved', {userToApp: $(this).attr('name')});
+      return false;
+    })

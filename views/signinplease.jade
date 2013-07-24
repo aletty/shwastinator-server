@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  .row 
+    .small-12.columns
+    h1 Please Log In or Sign Up
+  .row
+    .small-12.columns
+    .loginbuttons.centerbuttons(style='margin-top:40px;')
+      a(href = '/signin')
+        button(type='button')
+          b Sign In
+      a(href = '/signup')
+        button(type='button')
+          b Sign Up

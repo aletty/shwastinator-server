@@ -1,0 +1,43 @@
+extends layout 
+
+block content
+  .container
+    .row
+      h3 Add A Guest Account
+    .row
+      input.input-text.logins#username(type="text", placeholder="Username")
+    .row
+      input.input-text.logins#password(type="password", placeholder="Password")
+    .row
+      button#saveGuest(type="Submit")
+        b Add Guest
+    .row
+      p By adding this guest you take responsibility to settle for them in the event that they fail to do so
+
+  script.
+    $('#saveGuest').click(function(){
+      console.log("save Guest");
+      $.post('/newGuest', {username:$('#username').val(), uncryptpass:$('#password').val()});
+      return false;
+    });
+
+    $(document).keypress(function(e) {
+      if(e.which == 13) {
+        $.ajax({
+          url: '/newGuest',
+          type: 'POST',
+          data: JSON.stringify({'username':$('#username').val(), 'uncryptpass':$('#password').val()}),
+          dataType: 'json',        
+          contentType: 'application/json; charset=utf-8',
+          success: function(data) {
+            if (data.unique == false) {
+              alert("An account with that username already exists. Please choose another.");
+            }
+            if (typeof data.redirect == 'string') {
+              window.location = data.redirect
+            }
+          }
+        });
+        return false;
+      };
+    });

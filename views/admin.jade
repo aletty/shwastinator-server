@@ -1,0 +1,70 @@
+extends layout
+
+block content
+  .row
+    .small-12.columns
+      .row
+        .large-3.small-6.columns
+          h3 Set Pumps
+        .large-4.small-6.columns
+            .button#save Save
+        .large-3
+      form#setup
+        h5 Pump 1
+          select.medium#pump1(name = 'pump1')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 2
+          select.medium#pump2(name = 'pump2')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 3
+          select.medium#pump3(name = 'pump3')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 4
+          select.medium#pump4(name = 'pump4')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 5
+          select.medium#pump5(name = 'pump5')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 6
+          select.medium#pump6(name = 'pump6')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 7
+          select.medium#pump7(name = 'pump7')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 8
+          select.medium#pump8(name = 'pump8')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 9
+          select.medium#pump9(name = 'pump9')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 10
+          select.medium#pump10(name = 'pump10')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 11
+          select.medium#pump11(name = 'pump11')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 12
+          select.medium#pump12(name = 'pump12')
+            for liquid in liquids
+              option #{liquid.name}
+        h5 Pump 13
+          select.medium#pump13(name = 'pump13')
+            for liquid in liquids
+              option #{liquid.name}
+
+  script
+
+    $('#save').click(function() {
+      $.post('/saveSetup', $('#setup').serialize());
+    })

@@ -1,0 +1,56 @@
+doctype 5
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width")
+
+    title= title
+
+    link(rel='stylesheet', href='/stylesheets/offcanvas.css')    
+    link(rel='stylesheet', href='/stylesheets/foundation.css')
+    link(rel='stylesheet', href='/stylesheets/normalize.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/vendor/custom.modernizr.js')
+    script(src="/socket.io/socket.io.js")
+    script(src="/javascripts/vendor/jquery.js")
+
+  body.off-canvas
+    if (me)
+      include navbar
+    if (successes)
+      .row
+        for success in successes
+          .small-12.columns
+            div(data-alert='data-alert').alert-box.success
+              p #{success}
+              a(href='#').close
+                &times;
+    if (warnings)
+      .row
+        for warning in warnings
+          .small-12.columns
+            div(data-alert='data-alert').alert-box.alert
+              h5 #{warning}
+              a(href='#').close
+                &times;
+    if (messages)
+      .row
+        for message in messages
+          .small-12.columns
+            div(data-alert='data-alert').alert-box
+              h5 #{message}
+              a(href='#').close
+                &times;
+    section(role="main")
+      if (me)
+        include offcanvasMenu
+      block content
+
+    if (me)
+      section#sidebar(role="complementary").hide-for-medium-up
+        include sideNavbar
+
+    script(src="/javascripts/foundation.min.js")
+    script(src="/javascripts/jquery.offcanvas.js")
+    script.
+      $(document).foundation();   

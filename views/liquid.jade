@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  .row
+    .small-12.columns
+      form#newliquid
+        .row
+          h3 Add a New Liquid Type
+        .row
+          h5 Liquid
+          input#liquid(type='text', placeholder='Liquid', name='name')
+        .row
+          h5 Type
+          input#drinkType(type='text', placeholder='Rum', name='drinkType')
+        .row
+          &nbsp
+        .row
+          input#alcoholic(type='checkbox', name = 'alcoholic')
+          | Alcoholic?
+        .row
+          &nbsp
+        .row
+          .button#addliquid
+            | Add to DB
+  
+  script
+    $('#addliquid').click(function(){
+      console.log($('#liquid').val(), $('#drinkType').val(), $('#alcoholic').is(':checked'));
+      $.post("/addliquid", {liquid:$('#liquid').val(), drinkType:$('#drinkType').val(), alcoholic:$('#alcoholic').is(':checked')});
+      return false;
+    })

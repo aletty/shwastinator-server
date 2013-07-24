@@ -1,0 +1,58 @@
+extends layout 
+
+block content
+  .container
+    .row
+      h3 Log in to Shwastinator
+    .row
+      input.input-text.logins#username(type="text", placeholder="Username")
+    .row
+      input.input-text.logins#password(type="password", placeholder="Password")
+    .row
+      button#signin(type="Submit")
+        b Log In
+      |         Don't have an Account?         
+      a(href = '/signup')
+        button(type='button', id = "gologin")
+          b Sign Up
+  script.
+    $('#signin').click(function(){
+      console.log("HELLO");
+      $.ajax({
+        url: '/verify',
+        type: 'POST',
+        data: JSON.stringify({'username':$('#username').val(), 'uncryptpass':$('#password').val()}),
+        dataType: 'json',        
+        contentType: 'application/json; charset=utf-8',
+        success: function(data) {
+          if (data.verified == false) {
+            alert('Incorrect username/password combination. Please try again or create an account.');
+          }
+          if (typeof data.redirect == 'string') {
+            window.location = data.redirect
+          }
+        }
+      });
+      return false;
+    });
+
+    $(document).keypress(function(e) {
+      if(e.which == 13) {
+        $.ajax({
+          url: '/verify',
+          type: 'POST',
+          data: JSON.stringify({'username':$('#username').val(), 'uncryptpass':$('#password').val()}),
+          dataType: 'json',        
+          contentType: 'application/json; charset=utf-8',
+          success: function(data) {
+            if (data.verified == false) {
+              alert('Incorrect username/password combination. Please try again or create an account.');
+            }
+            if (typeof data.redirect == 'string') {
+              window.location = data.redirect
+            }
+          }
+        });
+        return false;
+      };
+    });

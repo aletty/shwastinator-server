@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  .row
+    .small-12.columns
+      .row
+        h3 Log Payment of User
+      .row
+        .small-4.columns
+          h5 User
+        .small-4.columns
+          h5 Amount Paid
+        .small-4.columns
+          &nbsp
+      form#payment
+        .row
+          .small-4.columns
+            select.medium(name = 'userToCredit')
+              for user in users
+                option #{user.name}
+          .small-4.columns
+            input#amount(type='text', name='amount')
+          .small-4.columns
+            .button.small#credit Credit Amount
+
+  script.
+    $('#credit').click(function(){
+      console.log("Button clicked");
+      console.log($('#toCredit'));
+      $.post("/credit", $('#payment').serialize());
+      return false;
+    })

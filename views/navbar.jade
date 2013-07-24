@@ -1,0 +1,41 @@
+nav.top-bar.hide-for-small
+  ul.title-area
+    li.name
+      h1
+        a(href='/') Shwastinator
+    li.toggle-topbar.menu-icon
+      a(href='#')
+        span
+  section.top-bar-section
+    ul.right
+      li
+        a(href='/') Order a Drink!
+      li
+        a(href='/allUsers') All Users
+      li
+        a(href='/addGuest') Add a Guest
+      li.divider
+      if (me.admin)
+        li.has-dropdown
+          a(href='/admin') Admin
+          ul.dropdown 
+            li
+              a(href='/admin') Set Up
+            li
+              a(href='/liquid') Add liquid
+            li
+              a(href='/createDrinks') Add Drink
+            li
+              a(href='/approveUsers') Approve Users
+            li
+              a(href='/logPayment') Log Payment
+      li.divider
+      li
+        a(href='/profile') #{me.name}
+
+
+script.
+  $('.navlink').click(function(){
+    $('.navlink').removeClass("active");
+    $(this).addClass("active"); 
+  });

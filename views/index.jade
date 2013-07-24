@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  if (topDrinks)
+    .row
+      .small-12.columns
+        .slideshow-wrapper
+          .preloader
+          ul(data-orbit='data-orbit')#featured1
+            for drink in topDrinks
+              li
+                .row
+                  .small-12.columns#wrap-img
+                    img(src=drink.image)
+                .orbit-caption #{drink.name} $#{drink.price}
+  .row
+    .small-12.columns
+      include showDrink
+
+  script.
+    // var socket = io.connect('localhost');
+    $('.order').click(function(){
+      console.log($(this).attr('data-caption'));
+      $.post('/orderDrink', {drinkOrdered: $(this).attr('data-caption')})
+      return false;
+    })  

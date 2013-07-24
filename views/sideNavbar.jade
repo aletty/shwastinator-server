@@ -1,0 +1,34 @@
+.main-menu
+  h6 Shwastinator
+  .section-container.auto(data-section='data-section')
+    section.navlink
+      p.title(data-section-title='data-section-title')
+        a(href='/') Home
+    section.navlink
+      p.title(data-section-title='data-section-title')
+        a(href='/profile') Profile
+    section.navlink
+      p.title(data-section-title='data-section-title')
+        a(href='/allUsers') All Users
+    if (me.admin)
+    section.navlink
+      p.title(data-section-title='data-section-title')
+        a(href='#') Admin
+      .content(data-section-content='data-section-content')
+        ul.side-nav
+          li.navlink
+            a(href='/admin') Set Up Shwastinator
+          li.navlink
+            a(href='/liquid') Add another liquid
+          li.navlink
+            a(href='/createDrinks') Add a New Drink
+          li.navlink
+            a(href='/approveUsers') Approve New Users
+          li.navlink
+            a(href='/logPayment') Log Payment          
+
+script.
+  $('.navlink').click(function(){
+    $('.navlink').removeClass("active");
+    $(this).addClass("active"); 
+  });

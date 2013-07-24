@@ -1,0 +1,58 @@
+extends layout 
+
+block content
+  .container
+    .row
+      h3 Create a New Account
+    .row
+      input.input-text.logins#username(type="text", placeholder="Username")
+    .row
+      input.input-text.logins#password(type="password", placeholder="Password")
+    .row
+      button#signup(type="Submit")
+        b Create an Account
+      |      Or     
+      a(href = '/signin')
+        button.btn.btn-large.span2(type='button', id = "gologin")
+          b Log In
+
+  script
+    $('#signup').click(function(){
+      $.ajax({
+        url: '/newUser',
+        type: 'POST',
+        data: JSON.stringify({'username':$('#username').val(), 'uncryptpass':$('#password').val()}),
+        dataType: 'json',        
+        contentType: 'application/json; charset=utf-8',
+        success: function(data) {
+          if (data.unique == false) {
+            alert("An account with that username already exists. Please choose another.");
+          }
+          if (typeof data.redirect == 'string') {
+            window.location = data.redirect
+          }
+        }
+      });
+      return false;
+    });
+
+    $(document).keypress(function(e) {
+      if(e.which == 13) {
+        $.ajax({
+          url: '/newUser',
+          type: 'POST',
+          data: JSON.stringify({'username':$('#username').val(), 'uncryptpass':$('#password').val()}),
+          dataType: 'json',        
+          contentType: 'application/json; charset=utf-8',
+          success: function(data) {
+            if (data.unique == false) {
+              alert("An account with that username already exists. Please choose another.");
+            }
+            if (typeof data.redirect == 'string') {
+              window.location = data.redirect
+            }
+          }
+        });
+        return false;
+      };
+    });
