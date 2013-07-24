@@ -1,4 +1,4 @@
-shwastinator-server
-===================
+shwastinator
+============
 
-The server part of the shwastinator
+robotic bartender
