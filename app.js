@@ -101,7 +101,7 @@ app.post('/newGuest', checkLoggedIn(), user.newGuest);
 
 server.listen(app.get('port'));
 
-io.sockets.on('connection', function(socket) {
+/*io.sockets.on('connection', function(socket) {
     socket.send('connected');
 
     socket.on('motor 1', function() {
@@ -110,3 +110,5 @@ io.sockets.on('connection', function(socket) {
     socket.on('motor 2', function(){
     });
 });
+
+*/
