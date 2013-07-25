@@ -5,12 +5,12 @@
 var models = require("../models.js");
 var bcrypt = require('bcrypt');
 
-var io = require('socket.io-client');
-var socket = io.connect('http://localhost:3000/notify')
+// var io = require('socket.io-client');
+// var socket = io.connect('http://localhost:3000/notify')
 
-function pushNotify(user, message, type) {
-  socket.emit('push', {name: user, notification: message, type: type});
-}
+// function pushNotify(user, message, type) {
+//   socket.emit('push', {name: user, notification: message, type: type});
+// }
 
 
 exports.profile = function(req, res){
@@ -75,7 +75,7 @@ exports.orderDrink = function(req, res){
     models.User.update({name:"Shwasted"},
       {$inc: {tab: drink.price}, $push: {_orders:drink}}).exec();
   });
-  pushNotify(req.session.user.name, req.body.drinkOrdered + ' ordered', 'success');
+  // pushNotify(req.session.user.name, req.body.drinkOrdered + ' ordered', 'success');
   req.flash('success', 'Place cup in Shwastinator');
 }
 

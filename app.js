@@ -7,7 +7,7 @@ var express = require('express')
 var app = express();
 
 var server = require('http').createServer(app)
-  , io = require('socket.io').listen(server)
+  // , io = require('socket.io').listen(server)
   , routes = require('./routes')
   , user = require('./routes/user')
   , bcrypt = require('bcrypt')
@@ -101,12 +101,12 @@ app.post('/newGuest', checkLoggedIn(), user.newGuest);
 
 server.listen(app.get('port'));
 
-io.of('/notify').on('connection', function (socket) {
-  socket.once('user', function(userData){
-    socket.join(userData.name);
-  });
+// io.of('/notify').on('connection', function (socket) {
+//   socket.once('user', function(userData){
+//     socket.join(userData.name);
+//   });
 
-  socket.on('push', function(data){
-    socket.broadcast.to(data.name, data).emit('update', data);
-  })
-});
+//   socket.on('push', function(data){
+//     socket.broadcast.to(data.name, data).emit('update', data);
+//   })
+// });
