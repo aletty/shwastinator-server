@@ -15,11 +15,11 @@ todo:
 
 - edit drinks
 - view all users tabs  
-- Allow approved Users to add guests
-    ??? should guests be automatically approved????
-    
+
+- Update Side Nav
+- Side Navbar active links   
 - On the setup page have it default to the last liquid settings not just 'Empty'
-- Navbar active links
+
 - Keep people from making blank passwords
 - Only allowed to order drinks when you are approved
 - Max tab - then block from ordering
@@ -38,7 +38,8 @@ todo:
     if we have them as different prices they should still be able to me mixed into drinks that require vodka ..etc.
 
 BUGS!
-- top 3 not displaying for friendProfile
+- orbit dots not showing on ios or android
+
 
 TWEAKS
 - remove add guest button on profile
@@ -54,3 +55,7 @@ Done
   socket.io
   bcrypt
   async
+- Allow approved Users to add guests
+
+BUGS!
+- top 3 not displaying for friendProfile

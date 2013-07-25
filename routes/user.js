@@ -14,7 +14,7 @@ exports.profile = function(req, res){
         console.log(sortedOrders);
         res.render('profile', {title: me.name, me: me, topDrinks:topDrinks, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
       });
-    } else{
+    } else {
       res.render('profile', {title: me.name, me: me, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
     }
   });
@@ -61,6 +61,7 @@ exports.login = function(req,res){
 
 exports.orderDrink = function(req, res){
   console.log(req.body.drinkOrdered);
+  req.flash('warning', 'Drink ordered!');
   models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
     models.User.update({name:req.session.user.name},
       {$inc: {tab: drink.price}, $push: {_orders:drink}}).exec();
@@ -69,6 +70,7 @@ exports.orderDrink = function(req, res){
     models.User.update({name:"Shwasted"},
       {$inc: {tab: drink.price}, $push: {_orders:drink}}).exec();
   });
+  req.flash('success', 'Place cup in Shwastinator');
 }
 
 exports.allUsers = function(req, res){
