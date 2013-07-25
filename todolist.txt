@@ -27,7 +27,11 @@ todo:
 - list ingredients in drinks on order page.....??????
 - Check for duplicate drinks, liquids, usernames
 - photoshop images to correct ratio
-- log out 
+- log out
+- Make drinks in orbit clickable
+
+- make drink Queue
+  - have ability to cancel own drink ?
 
 
 ???Tally marks for the night???be could cool... -> only visable to yourself..?
@@ -38,7 +42,7 @@ todo:
     if we have them as different prices they should still be able to me mixed into drinks that require vodka ..etc.
 
 BUGS!
-- orbit dots not showing on ios or android
+- orbit bullets not showing on ios or android
 
 
 TWEAKS
