@@ -7,7 +7,7 @@ var express = require('express')
 var app = express();
 
 var server = require('http').createServer(app)
-  , io = require('socket.io').listen(server)
+//  , io = require('socket.io').listen(server)
   , routes = require('./routes')
   , user = require('./routes/user')
   , bcrypt = require('bcrypt')
