@@ -4,6 +4,15 @@
  */
 
 var models = require('../models');
+var io = require('socket.io-client');
+var socket = io.connect('http://localhost:3000/notify')
+
+function pushNotify(user, message) {
+  socket.once('connect', function(){
+    console.log('connected');
+    socket.emit('push', {name: user, notification: message});
+  });
+}
 
 exports.index = function(req, res){
   models.User.findOne({name:"Shwasted"}).populate('_orders').exec(function (err, user){

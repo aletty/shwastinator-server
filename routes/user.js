@@ -5,6 +5,13 @@
 var models = require("../models.js");
 var bcrypt = require('bcrypt');
 
+var io = require('socket.io-client');
+var socket = io.connect('http://localhost:3000/notify')
+
+function pushNotify(user, message, type) {
+  socket.emit('push', {name: user, notification: message, type: type});
+}
+
 
 exports.profile = function(req, res){
   models.User.findOne({name: req.session.user.name}).populate('_orders').exec(function (err, me){
@@ -60,8 +67,6 @@ exports.login = function(req,res){
 }
 
 exports.orderDrink = function(req, res){
-  console.log(req.body.drinkOrdered);
-  req.flash('warning', 'Drink ordered!');
   models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
     models.User.update({name:req.session.user.name},
       {$inc: {tab: drink.price}, $push: {_orders:drink}}).exec();
@@ -70,6 +75,7 @@ exports.orderDrink = function(req, res){
     models.User.update({name:"Shwasted"},
       {$inc: {tab: drink.price}, $push: {_orders:drink}}).exec();
   });
+  pushNotify(req.session.user.name, req.body.drinkOrdered + ' ordered', 'success');
   req.flash('success', 'Place cup in Shwastinator');
 }
 
