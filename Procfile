@@ -1,1 +1,1 @@
-web: node brains/app.js
+web: node app.js
