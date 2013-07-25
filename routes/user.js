@@ -17,7 +17,6 @@ exports.profile = function(req, res){
     } else{
       res.render('profile', {title: me.name, me: me, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
     }
-      
   });
 };
 
@@ -81,9 +80,18 @@ exports.allUsers = function(req, res){
 exports.friendProfile = function(req, res){
   models.User.findOne({name: req.params.friend}).populate('_orders').exec(function (err, user){
     var sortedOrders = topOrders(user._orders)
-    res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+    if(sortedOrders.length>=3){
+      models.Drink.find({$or: [ {name: sortedOrders[0][0]}, {name: sortedOrders[1][0]}, {name: sortedOrders[2][0]}]}).exec(function (err, topDrinks){
+        console.log(sortedOrders);
+        console.log(topOrders);
+        res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+      });
+    } else {
+      res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+    }  
   });
 };
+
 
 
 function topOrders(_orders) {
