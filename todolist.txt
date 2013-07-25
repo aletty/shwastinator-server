@@ -7,6 +7,8 @@ todo:
   - for the Whole Bar
   - for users
 
+- change favicon 
+
 - Question for arjun - date.now() not viewable ..??
 
 - ALERTS - part of layout!!
@@ -25,6 +27,8 @@ todo:
 - list ingredients in drinks on order page.....??????
 - Check for duplicate drinks, liquids, usernames
 - photoshop images to correct ratio
+- log out 
+
 
 ???Tally marks for the night???be could cool... -> only visable to yourself..?
 - See Other User profiles
@@ -33,8 +37,11 @@ todo:
 ???should we care about alch types??? ie cosik vs smirnoff..
     if we have them as different prices they should still be able to me mixed into drinks that require vodka ..etc.
 
+BUGS!
+- top 3 not displaying for friendProfile
 
-
+TWEAKS
+- remove add guest button on profile
 
 Done
 - Admin Page to aprove new users

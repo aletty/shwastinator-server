@@ -41,14 +41,15 @@ html
               h5 #{message}
               a(href='#').close
                 &times;
-    section(role="main")
-      if (me)
-        include offcanvasMenu
-      block content
+    .row
+      section(role="main")
+        if (me)
+          include offcanvasMenu
+        block content
 
-    if (me)
-      section#sidebar(role="complementary").hide-for-medium-up
-        include sideNavbar
+      if (me)
+        section#sidebar(role="complementary").hide-for-medium-up
+          include sideNavbar
 
     script(src="/javascripts/foundation.min.js")
     script(src="/javascripts/jquery.offcanvas.js")
