@@ -102,10 +102,10 @@ app.post('/newGuest', checkLoggedIn(), user.newGuest);
 server.listen(app.get('port'));
 
 //heroku configuration
-io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
-});
+// io.configure(function () { 
+//   io.set("transports", ["xhr-polling"]); 
+//   io.set("polling duration", 10); 
+// });
 
 //real time notification logic
 io.of('/notify').on('connection', function (socket) {
