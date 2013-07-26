@@ -57,7 +57,7 @@ if ('development' == app.get('env')) {
 function checkLoggedIn() {
   return function(req, res, next) {
     if (!req.session.user){
-      res.render('signinplease', {title: 'Sign In'});
+      res.render("signinplease", {title: 'Sign In'});
     } else {
       next();
     };
