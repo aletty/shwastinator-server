@@ -57,7 +57,7 @@ if ('development' == app.get('env')) {
 function checkLoggedIn() {
   return function(req, res, next) {
     if (!req.session.user){
-      res.render("signinplease", {title: 'Sign In'});
+      res.render('signinplease', {title: 'Sign In'});
     } else {
       next();
     };
@@ -100,12 +100,6 @@ app.get('/addGuest', checkLoggedIn(), user.addGuest);
 app.post('/newGuest', checkLoggedIn(), user.newGuest);
 
 server.listen(app.get('port'));
-
-//heroku configuration
-// io.configure(function () { 
-//   io.set("transports", ["xhr-polling"]); 
-//   io.set("polling duration", 10); 
-// });
 
 //real time notification logic
 io.of('/notify').on('connection', function (socket) {
