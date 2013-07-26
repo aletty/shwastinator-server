@@ -4,14 +4,7 @@
  */
 var models = require("../models.js");
 var bcrypt = require('bcrypt');
-
-// var io = require('socket.io-client');
-// var socket = io.connect('http://localhost:3000/notify')
-
-// function pushNotify(user, message, type) {
-//   socket.emit('push', {name: user, notification: message, type: type});
-// }
-
+var notify = require('../utils/notify.js');
 
 exports.profile = function(req, res){
   models.User.findOne({name: req.session.user.name}).populate('_orders').exec(function (err, me){
@@ -19,20 +12,20 @@ exports.profile = function(req, res){
     if(sortedOrders.length>=3){
       models.Drink.find({$or: [ {name: sortedOrders[0][0]}, {name: sortedOrders[1][0]}, {name: sortedOrders[2][0]}]}).exec(function (err, topDrinks){
         console.log(sortedOrders);
-        res.render('profile', {title: me.name, me: me, topDrinks:topDrinks, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+        res.render('profile', {title: me.name, me: me, topDrinks:topDrinks});
       });
     } else {
-      res.render('profile', {title: me.name, me: me, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+      res.render('profile', {title: me.name, me: me});
     }
   });
 };
 
 exports.signin = function(req, res){
-    res.render('signin', {title: 'Shwastinator', messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+    res.render('signin', {title: 'Shwastinator'});
 }
 
 exports.signup = function(req, res){
-    res.render('signup', {title: 'Shwastinator', messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+    res.render('signup', {title: 'Shwastinator'});
 }
 
 exports.create = function(req, res){   
@@ -68,20 +61,22 @@ exports.login = function(req,res){
 
 exports.orderDrink = function(req, res){
   models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
-    models.User.update({name:req.session.user.name},
-      {$inc: {tab: drink.price}, $push: {_orders:drink}}).exec();
+    models.User.update({name:req.session.user.name}, {$inc: {tab: drink.price}, $push: {_orders:drink}}, function (err, numAffected, raw) {
+      if (err) {
+        notify.push(req.session.user.name, err, 'warning');
+      } else {
+        notify.push(req.session.user.name, req.body.drinkOrdered + ' ordered', 'success');
+      }
+    });
   });
   models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
-    models.User.update({name:"Shwasted"},
-      {$inc: {tab: drink.price}, $push: {_orders:drink}}).exec();
+    models.User.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:drink}}).exec();
   });
-  // pushNotify(req.session.user.name, req.body.drinkOrdered + ' ordered', 'success');
-  req.flash('success', 'Place cup in Shwastinator');
 }
 
 exports.allUsers = function(req, res){
   models.User.find({}).exec(function(err, users){
-    res.render('allUsers', {title: 'All Users',  me: req.session.user, users:users, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+    res.render('allUsers', {title: 'All Users',  me: req.session.user, users:users, });
   })
 }
 
@@ -92,10 +87,10 @@ exports.friendProfile = function(req, res){
       models.Drink.find({$or: [ {name: sortedOrders[0][0]}, {name: sortedOrders[1][0]}, {name: sortedOrders[2][0]}]}).exec(function (err, topDrinks){
         console.log(sortedOrders);
         console.log(topOrders);
-        res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+        res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks});
       });
     } else {
-      res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+      res.render('friendProfile', {title: user.name, me: req.session.user, friend: user});
     }  
   });
 };
@@ -120,7 +115,7 @@ function topOrders(_orders) {
 }
 
 exports.addGuest = function(req, res){
-  res.render('addGuest', {title:'Add Guest', me:req.session.user, messages: req.flash('info'), warnings: req.flash('warning'), successes: req.flash('success')});
+  res.render('addGuest', {title:'Add Guest', me:req.session.user, });
 }
 
 

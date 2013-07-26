@@ -55,27 +55,27 @@ html
     script(src="/javascripts/foundation.min.js")
     script(src="/javascripts/jquery.offcanvas.js")
     script(src="/socket.io/socket.io.js")
-    //- if (me)
-    //-   script.
-    //-     var notify = io.connect('http://localhost/notify');
+    if (me)
+      script.
+        var notify = io.connect('http://localhost/notify');
 
-    //-     notify.on('connect', function() {
-    //-       console.log('connected');
-    //-       notify.emit('user', {name: '#{me.name}'});
-    //-     });
+        notify.on('connect', function() {
+          console.log('connected');
+          notify.emit('user', {name: '#{me.name}'});
+        });
 
-    //-     notify.on('update', function(data) {
-    //-       console.log(data);
-    //-       if (data.type == 'info'){
-    //-         $('#notifications').append('<div class="small-12 columns"><div data-alert class="alert-box secondary">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
-    //-       }
-    //-       if (data.type == 'warning'){
-    //-         $('#notifications').append('<div class="small-12 columns"><div data-alert class="alert-box alert">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
-    //-       }
-    //-       if (data.type == 'success'){
-    //-         $('#notifications').append('<div class="small-12 columns"><div data-alert class="alert-box success">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
-    //-       }          
-    //-     });
+        notify.on('update', function(data) {
+          console.log(data);
+          if (data.type == 'info'){
+            $('#notifications').append('<div class="small-12 columns"><div data-alert class="alert-box secondary">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
+          }
+          if (data.type == 'warning'){
+            $('#notifications').append('<div class="small-12 columns"><div data-alert class="alert-box alert">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
+          }
+          if (data.type == 'success'){
+            $('#notifications').append('<div class="small-12 columns"><div data-alert class="alert-box success">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
+          }          
+        });
 
     script.
       $(document).foundation();   
