@@ -57,7 +57,7 @@ html
     script(src="/socket.io/socket.io.js")
     if (me)
       script.
-        var notify = io.connect('http://localhost/notify');
+        var notify = io.connect('http://shwastinator.herokuapp.com/notify');
 
         notify.on('connect', function() {
           console.log('connected');
