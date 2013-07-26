@@ -107,6 +107,7 @@ io.configure(function () {
   io.set("polling duration", 10); 
 });
 
+
 //real time notification logic
 io.of('/notify').on('connection', function (socket) {
   socket.once('user', function(userData){
