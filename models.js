@@ -24,11 +24,6 @@ var drinkSchema = new Schema({
     imageSmall: String
 });
 
-drinkSchema.pre('save', function(next, done) {
-    var self = this;
-    
-})
-
 var Drink = mongoose.model('Drink', drinkSchema);
 
 var liquidSchema = new Schema({

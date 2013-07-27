@@ -6,7 +6,13 @@
         a(href='/') Home
     section.navlink
       p.title(data-section-title='data-section-title')
-        a(href='/profile') Profile
+        a(href='#') #{me.name}
+      .content(data-section-content='data-section-content')
+        ul.side-nav
+          li.navlink
+            a(href='/profile') Profile
+          li.navlink
+            a(href='/logout') Log Out 
     section.navlink
       p.title(data-section-title='data-section-title')
         a(href='/allUsers') All Users

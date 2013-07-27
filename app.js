@@ -66,7 +66,7 @@ function checkLoggedIn() {
 
 function checkAdmin() {
   return function(req, res, next) {
-    if (!req.session.user){
+    if (!req.session.user.admin){
       res.render('signinplease', {title: 'Sign In'});
     } else {
       next();
@@ -86,6 +86,7 @@ app.post('/addLiquid', checkAdmin(), admin.addLiquid);
 app.get('/createUsers', dev.createUsers);
 app.get('/drinks', dev.drinks);
 app.post('/verify', user.login);
+app.get('/logout', user.logout);
 app.get('/createDrinks', checkAdmin(), admin.createDrinks);
 app.post('/saveDrink', checkAdmin(), admin.saveDrink);
 app.post('/saveSetup', checkAdmin(), admin.saveSetup);

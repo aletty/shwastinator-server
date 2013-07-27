@@ -30,8 +30,11 @@ nav.top-bar.hide-for-small
             li
               a(href='/logPayment') Log Payment
       li.divider
-      li
+      li.has-dropdown
         a(href='/profile') #{me.name}
+        ul.dropdown
+          li
+            a(href='/logout') Log Out
 
 
 script.

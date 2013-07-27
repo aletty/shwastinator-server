@@ -59,6 +59,11 @@ exports.login = function(req,res){
   });
 }
 
+exports.logout = function(req,res){
+  delete req.session.user;
+  res.redirect('/');
+}
+
 exports.orderDrink = function(req, res){
   models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
     models.User.update({name:req.session.user.name}, {$inc: {tab: drink.price}, $push: {_orders:drink}}, function (err, numAffected, raw) {
@@ -95,8 +100,6 @@ exports.friendProfile = function(req, res){
   });
 };
 
-
-
 function topOrders(_orders) {
     //takes name of liquid and pump number
   var hist = {};
@@ -117,7 +120,6 @@ function topOrders(_orders) {
 exports.addGuest = function(req, res){
   res.render('addGuest', {title:'Add Guest', me:req.session.user, });
 }
-
 
 exports.newGuest = function(req, res){
   console.log(req.body);
