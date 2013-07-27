@@ -1,7 +1,7 @@
 var io = require('socket.io-client');
 
-// var socket = io.connect('http://shwastinator.herokuapp.com/notify');
-var socket = io.connect('http://localhost:3000/notify');
+var socket = io.connect('http://shwastinator.herokuapp.com/notify');
+// var socket = io.connect('http://localhost:3000/notify');
 
 exports.push = function (user, message, type) {
   //user: name of user to notify normally req.session.user.name

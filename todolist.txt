@@ -11,8 +11,6 @@ todo:
 
 - Question for arjun - date.now() not viewable ..??
 
-- ALERTS - part of layout!!
-
 - edit drinks
 - view all users tabs  
 
@@ -27,7 +25,6 @@ todo:
 - list ingredients in drinks on order page.....??????
 - Check for duplicate drinks, liquids, usernames
 - photoshop images to correct ratio
-- log out
 - Make drinks in orbit clickable
 
 - make drink Queue
@@ -60,6 +57,9 @@ Done
   bcrypt
   async
 - Allow approved Users to add guests
+- ALERTS - part of layout!!
+- log out
+
 
 BUGS!
 - top 3 not displaying for friendProfile
