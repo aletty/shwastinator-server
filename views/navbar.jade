@@ -12,8 +12,6 @@ nav.top-bar.hide-for-small
         a(href='/') Order a Drink!
       li
         a(href='/allUsers') All Users
-      li
-        a(href='/addGuest') Add a Guest
       li.divider
       if (me.admin)
         li.has-dropdown
@@ -35,6 +33,8 @@ nav.top-bar.hide-for-small
         ul.dropdown
           li
             a(href='/profile') Profile
+          li
+            a(href='/addGuest') Add Guest
           li
             a(href='/logout') Log Out
 
