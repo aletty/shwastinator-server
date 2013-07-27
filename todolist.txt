@@ -7,6 +7,9 @@ todo:
   - for the Whole Bar
   - for users
 
+- Image upload when making drink
+  - resize images after uploading
+
 - change favicon 
 
 - Question for arjun - date.now() not viewable ..??
@@ -15,7 +18,8 @@ todo:
 - view all users tabs  
 
 - Update Side Nav
-- Side Navbar active links   
+  - Side Navbar active links   
+
 - On the setup page have it default to the last liquid settings not just 'Empty'
 
 - Keep people from making blank passwords
