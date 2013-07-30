@@ -5,21 +5,17 @@ todo:
   - For Users
 - Drink Of the Night
   - for the Whole Bar
-  - for users
-
-- Image upload when making drink
-  - resize images after uploading
-
-- change favicon 
+  - for users 
 
 - Question for arjun - date.now() not viewable ..??
+
+- ALERTS - part of layout!!
 
 - edit drinks
 - view all users tabs  
 
 - Update Side Nav
-  - Side Navbar active links   
-
+- Side Navbar active links   
 - On the setup page have it default to the last liquid settings not just 'Empty'
 
 - Keep people from making blank passwords
@@ -29,10 +25,11 @@ todo:
 - list ingredients in drinks on order page.....??????
 - Check for duplicate drinks, liquids, usernames
 - photoshop images to correct ratio
+- log out
 - Make drinks in orbit clickable
 
 - make drink Queue
-  - have ability to cancel own drink ?
+  - have ability to cancel your own drink ?
 
 
 ???Tally marks for the night???be could cool... -> only visable to yourself..?
@@ -61,9 +58,7 @@ Done
   bcrypt
   async
 - Allow approved Users to add guests
-- ALERTS - part of layout!!
-- log out
-
+- change favicon
 
 BUGS!
 - top 3 not displaying for friendProfile
