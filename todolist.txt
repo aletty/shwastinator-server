@@ -7,7 +7,10 @@ todo:
   - for the Whole Bar
   - for users 
 
-- Question for arjun - date.now() not viewable ..??
+- Simplify login code
+  - Keep people from having duplicate usernames
+
+- Question for arjun - date.now() not viewable ..?? hi!
 
 - ALERTS - part of layout!!
 
@@ -31,34 +34,31 @@ todo:
 - make drink Queue
   - have ability to cancel your own drink ?
 
-
-???Tally marks for the night???be could cool... -> only visable to yourself..?
-- See Other User profiles
-- Create new Drinks
-????Cup size...?????
-???should we care about alch types??? ie cosik vs smirnoff..
-    if we have them as different prices they should still be able to me mixed into drinks that require vodka ..etc.
+IDEAS
+  ???Tally marks for the night???be could cool... -> only visable to yourself..?
+  - See Other User profiles
+  - Create new Drinks
+  ????Cup size...?????
+  ???should we care about alch types??? ie cosik vs smirnoff..
+      if we have them as different prices they should still be able to me mixed into drinks that require vodka ..etc.
 
 BUGS!
 - orbit bullets not showing on ios or android
+- top 3 not displaying for friendProfile
 
 
 TWEAKS
 - remove add guest button on profile
 
-Done
+COMPLETED
 - Admin Page to aprove new users
-- Keep people from having duplicate usernames
 - Admin page to change balance of users
 - Order Drinks
 - Fixed mobile view
--add to package.json
-  mongoose
-  socket.io
-  bcrypt
-  async
+- add to package.json
+    mongoose
+    socket.io
+    bcrypt
+    async
 - Allow approved Users to add guests
 - change favicon
-
-BUGS!
-- top 3 not displaying for friendProfile
