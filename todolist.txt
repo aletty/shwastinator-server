@@ -9,8 +9,10 @@ todo:
 
 - Simplify login code
   - Keep people from having duplicate usernames
+  - Keep people from making blank passwords
 
-- Question for arjun - date.now() not viewable ..?? hi!
+
+- Question for arjun - date.now() not viewable ..?? HI!
 
 - ALERTS - part of layout!!
 
@@ -21,7 +23,6 @@ todo:
 - Side Navbar active links   
 - On the setup page have it default to the last liquid settings not just 'Empty'
 
-- Keep people from making blank passwords
 - Only allowed to order drinks when you are approved
 - Max tab - then block from ordering
 - display only drinks that we have ingredients for

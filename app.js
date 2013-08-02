@@ -108,6 +108,17 @@ io.configure(function () {
   io.set("polling duration", 10); 
 });
 
+//pi communication
+io.of('/pi').on('connection', function (socket) {
+  socket.on('push queue', function(data){
+    socket.broadcast.emit('new drink', data);
+  });
+
+  socket.on('finish drink', function(){
+    socket.broadcast.emit('shift queue');
+  });
+});
+
 //real time notification logic
 io.of('/notify').on('connection', function (socket) {
   socket.once('user', function(userData){

@@ -6,6 +6,7 @@ var models = require("../models.js");
 var bcrypt = require('bcrypt');
 var notify = require('../utils/notify.js');
 
+
 exports.profile = function(req, res){
   models.User.findOne({name: req.session.user.name}).populate('_orders').exec(function (err, me){
     var sortedOrders = topOrders(me._orders);
@@ -75,7 +76,8 @@ exports.orderDrink = function(req, res){
     });
   });
   models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
-    models.User.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:drink}}).exec();
+    pi.pushQueue(drink);
+    models.User.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:drink, _queue:drink}}).exec();
   });
 }
 
@@ -131,3 +133,18 @@ exports.newGuest = function(req, res){
   models.User.update({name:req.session.user.name},
       {$push: {guest:guest_user}}).exec();
 }
+
+//queue management
+var io = require('socket.io-client');
+//Keely if it complains when on localhost comment out the herokuapp line and uncomment the localhost
+var socket = io.connect('http://shwastinator.herokuapp.com/pi');
+// var socket = io.connect('http://localhost:3000/notify');
+
+function pushQueue(drink) {
+  //drink to add to the queue
+  socket.emit('update queue', {drink: drink});
+}
+
+socket.on('shift queue', function(){
+  models.User.update({name:"Shwasted"}, {$pop: {_queue:-1}}).exec();
+});
