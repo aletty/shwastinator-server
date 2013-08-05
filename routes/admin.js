@@ -1,5 +1,6 @@
 var models = require("../models.js");
 var async = require("async");
+var notify = requier('../utils/notify.js')
 
 exports.home = function(req, res) {
     console.log(req.session.user)
@@ -20,8 +21,12 @@ exports.addLiquid = function(req, res){
     console.log(req.body);
     var newliquid = new models.Liquid({name: req.body.liquid, type: req.body.drinkType, alcoholic: req.body.alcoholic});
     newliquid.save(function(err){
-        if (err) return ("error saving liquid", err);
-        console.log('liquid saved');
+        if (err) {
+            notify.push(req.session.user, err, 'warning');
+        };
+        else {
+            notify.push(req.session.user, 'Liquid Saved', 'success');
+        }
     });
     res.redirect("/admin");
 };
