@@ -1,6 +1,8 @@
 extends layout
 
 block content
+  script.
+    filepicker.setKey('AG4iSyAFR1ix7zdHsvAtKz');
   .row
     .small-12.columns
       .small-6.columns
@@ -10,53 +12,48 @@ block content
           .button#saveDrink Save Drink
           
   .row
-    .small-12.columns
+    .small-6.columns
       form#drinkForm
         .row
-          .small-6.columns
+          .small-12.columns
             h5 Drink Name
-          .small-3.columns
+        .row
+          .small-12.columns
+            input#drinkname(type='text', placeholder = 'Rum and Coke');
+        .row
+          .small-6.columns
             h5 Cost
-          .small-3.columns
+          .small-6.columns
             h5 Price
         .row
           .small-6.columns
-            input#drinkname(type='text', placeholder = 'Rum and Coke');
-          .small-3.columns
             input#cost(type='text', placeholder = '1.5');
-          .small-3.columns
+          .small-6.columns
             input#price(type='text', placeholder = '3');
         .row
-          .small-6.columns
-            h5 Image Large
-          .small-6.columns
-            h5 Image Small
-        .row
-          .small-6.columns
-            input#picLarge(type='text', placeholder= 'Large image filename');
-          .small-6.columns
-            input#picSmall(type='text', placeholder= 'Small image filename');
-        .row
-          .small-3.columns
-            h5 Ingredients
-          .small-2.columns
-            h5 Units
           .small-7.columns
+            h5 Ingredients
+          .small-3.columns
+            h5 Units
+          .small-1.columns
             &nbsp;
 
         .row#Ingredients
-          .small-3.columns
+          .small-7.columns
             select#ingredient1
               for liquid in liquids
                 option #{liquid.name}
-          .small-1.columns
+          .small-3.columns
             input#units1(type='text', placeholder = '1');
-          .small-4.columns
+          .small-1.columns
             .button.small.addLiquid +
-          .small-4.columns
+          .small-1.columns
             &nbsp;
 
         .row#currentIngredients
+    .small-6.columns
+      div#dropPane
+        div#dropPane-name Drop Image Here
 
   script.
     var newDrink = {
@@ -75,8 +72,6 @@ block content
       newDrink.name = $('#drinkname').val();
       newDrink.cost = $('#cost').val();
       newDrink.price = $('#price').val();
-      newDrink.image = '/images/' + $('#picLarge').val();
-      newDrink.imageSmall = '/images/' + $('#picSmall').val();
       $.ajax({
         url: '/saveDrink',
         type: 'POST',
@@ -89,4 +84,40 @@ block content
         }
       });
       return false;
+    });
+
+    filepicker.makeDropPane($('#dropPane'), {
+      multiple: true,
+      dragEnter: function(){
+        $('#dropPane').html("Drop to Upload").css({
+          'backgroundColor': '#E0E0E0',
+          'border': '1px solid #000',
+          'height': '100%',
+          'min-height': '1em',
+          'position': 'relative',
+          'height': '2em',
+          'text-align': 'center',
+          'padding-top': '2%',          
+        });
+      },
+      dragLeave: function() {
+        $('#dropPane').html("Drop Image Here").css({
+            'background-color': '#F6F6F6',
+            'border': '1px solid #666',
+            'height': '100%',
+            'min-height': '1em',
+            'position': 'relative',
+            'height': '2em',
+            'text-align': 'center',
+            'padding-top': '2%',
+        });
+      },
+      onSuccess: function(InkBlobs){
+        newDrink.image = InkBlobs[0].url+'/convert?w=203&h=306&fit=scale';
+        newDrink.imageSmall = InkBlobs[0].url+'/convert?w=61&h=92&fit=scale';
+      },
+      onProgress: function(percentage){
+        $('#dropPane').text('Uploading ('+percentage+'%)');
+      },
+      acess: 'public'
     });

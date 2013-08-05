@@ -76,7 +76,7 @@ exports.orderDrink = function(req, res){
     });
   });
   models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
-    pi.pushQueue(drink);
+    pushQueue(drink);
     models.User.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:drink, _queue:drink}}).exec();
   });
 }
