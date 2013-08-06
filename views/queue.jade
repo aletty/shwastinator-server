@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .row 
+    .small-12.columns
+      h1 Queue
+      for drink in shwasted._queue
+        .panel
+          .row
+            .small-2.columns
+              img(src='#{drink.drink.imageSmall}')
+            .small-8.columns
+              .row
+                h2 #{drink.drink.name}
+              .row
+                h5 #{drink.user.name}
+            .small-2.columns
+              if (drink.user.imageSmall)
+                img(src='#{user.user.img}')
+              else
+                img(src='../default_prof.jpg').th
