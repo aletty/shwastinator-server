@@ -42,7 +42,7 @@ html
               h5 #{message}
               a(href='#').close
                 &times;
-    .row#notifications
+    .row.notifications
     .row
       section(role="main")
         if (me)
@@ -69,17 +69,17 @@ html
         notify.on('update', function(data) {
           console.log(data);
           if (data.type == 'info'){
-            $('#notifications').append('<div class="small-12 columns"><div data-alert class="alert-box secondary" id="notify">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
+            $('.notifications').append('<div class="small-12 columns"><div data-alert class="alert-box secondary">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
           }
           if (data.type == 'warning'){
-            $('#notifications').append('<div class="small-12 columns"><div data-alert class="alert-box alert" id="notify">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
+            $('.notifications').append('<div class="small-12 columns"><div data-alert class="alert-box alert">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
           }
           if (data.type == 'success'){
-            $('#notifications').append('<div class="small-12 columns"><div data-alert class="alert-box success" id="notify">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
+            $('.notifications').append('<div class="small-12 columns"><div data-alert class="alert-box success">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
           }
           setTimeout(function() {
-            ('#notify').remove();
-          }, 2000);
+            $('.notifications').empty();
+          }, 4000);
         });
 
     script.
