@@ -1,11 +1,9 @@
 todo:
 - Optimize pages for mobile
-- All time favorite Drinks
-  - for the whole Bar
-  - For Users
 - Drink Of the Night
   - for the Whole Bar
   - for users 
+- Limit display of recent drinks
 
 - Simplify login code
   - Keep people from having duplicate usernames
@@ -16,8 +14,10 @@ todo:
 
 - ALERTS - part of layout!!
 
-- edit drinks
+- edit drinks...?
+  - delete drinks...for
 - view all users tabs  
+- dont allow duplicate drinks
 
 - Update Side Nav
 - Side Navbar active links   
@@ -32,6 +32,8 @@ todo:
 - log out
 - Make drinks in orbit clickable
 
+- timeout the notifications
+
 - make drink Queue
   - have ability to cancel your own drink ?
 
@@ -45,7 +47,7 @@ IDEAS
 
 BUGS!
 - orbit bullets not showing on ios or android
-- top 3 not displaying for friendProfile
+
 
 
 TWEAKS
@@ -63,3 +65,7 @@ COMPLETED
     async
 - Allow approved Users to add guests
 - change favicon
+- top 3 not displaying for friendProfile
+- All time favorite Drinks
+  - for the whole Bar
+  - For Users

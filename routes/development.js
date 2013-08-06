@@ -7,8 +7,7 @@ exports.createUsers = function(req, res){
     var hasheda = bcrypt.hashSync("arjun", 10);
     var hashedn = bcrypt.hashSync("notad", 10);
     var hashedu = bcrypt.hashSync("unapp", 10);
-    var hashedsh = bcrypt.hashSync("shwasted", 10);
-    var shwasted = new models.User({name: "Shwasted", password: hashedsh, approved: true, tab: 0, admin: false, _orders:[], _queue:[], isguest:false});
+    var shwasted = new models.Shwasted({name: 'Shwasted', tab: 0, _orders:[], _queue:[]});
     shwasted.save(function(err){
         if (err) return ("error saving Shwasted", err);
         console.log('Shwasteds saved');

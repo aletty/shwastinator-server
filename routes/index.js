@@ -6,7 +6,7 @@
 var models = require('../models');
 
 exports.index = function(req, res){
-  models.User.findOne({name:"Shwasted"}).populate('_orders').exec(function (err, user){
+  models.Shwasted.findOne({name:"Shwasted"}).populate('_orders').exec(function (err, user){
     var sortedOrders = topOrders(user._orders);
     console.log(sortedOrders);
     models.Drink.find().exec(function (err, drinks){
@@ -41,4 +41,11 @@ function topOrders(_orders) {
   }
   else 
     return false;
+}
+
+exports.queue = function(req, res) {
+  models.Shwasted.findOne({name:"Shwasted"}).populate('_queue.drink _queue.user').exec(function (err, shwasted) {
+    console.log(shwasted);
+    res.render('queue',{title: 'Shwastinator', me: req.session.user, shwasted: shwasted});
+  });
 }

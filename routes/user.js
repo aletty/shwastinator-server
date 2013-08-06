@@ -75,10 +75,12 @@ exports.orderDrink = function(req, res){
       }
     });
   });
-  models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
-    pushQueue(drink);
-    models.User.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:drink, _queue:drink}}).exec();
-  });
+  models.User.findOne({name: req.session.user.name}, function (err, user) {
+    models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
+      pushQueue(drink);
+      models.Shwasted.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:drink, _queue:{drink: drink, user: user}}}).exec();
+    });
+  })
 }
 
 exports.allUsers = function(req, res){
@@ -141,7 +143,7 @@ var socket = io.connect('http://shwastinator.herokuapp.com/pi');
 // var socket = io.connect('http://localhost:3000/notify');
 
 function pushQueue(drink) {
-  //drink to add to the queue
+  //drink to e queuadd to the queue
   socket.emit('update queue', {drink: drink});
 }
 
