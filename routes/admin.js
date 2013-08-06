@@ -1,6 +1,6 @@
 var models = require("../models.js");
 var async = require("async");
-var notify = requier('../utils/notify.js')
+var notify = require('../utils/notify.js')
 
 exports.home = function(req, res) {
     console.log(req.session.user)
@@ -23,7 +23,7 @@ exports.addLiquid = function(req, res){
     newliquid.save(function(err){
         if (err) {
             notify.push(req.session.user, err, 'warning');
-        };
+        }
         else {
             notify.push(req.session.user, 'Liquid Saved', 'success');
         }
