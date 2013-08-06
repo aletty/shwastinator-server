@@ -66,20 +66,27 @@ exports.logout = function(req,res){
 }
 
 exports.orderDrink = function(req, res){
-  models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
-    models.User.update({name:req.session.user.name}, {$inc: {tab: drink.price}, $push: {_orders:drink}}, function (err, numAffected, raw) {
-      if (err) {
-        notify.push(req.session.user.name, err, 'warning');
-      } else {
-        notify.push(req.session.user.name, req.body.drinkOrdered + ' ordered', 'success');
-      }
-    });
-  });
-  models.User.findOne({name: req.session.user.name}, function (err, user) {
-    models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
-      pushQueue(drink);
-      models.Shwasted.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:drink, _queue:{drink: drink, user: user}}}).exec();
-    });
+  models.User.findOne({name:req.session.user.name}).exec(function (err, user){
+    if(user.approved){
+      models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
+        models.User.update({name:req.session.user.name}, {$inc: {tab: drink.price}, $push: {_orders:drink}}, function (err, numAffected, raw) {
+          if (err) {
+            notify.push(req.session.user.name, err, 'warning');
+          } else {
+            notify.push(req.session.user.name, req.body.drinkOrdered + ' ordered', 'success');
+          }
+        });
+      });
+      models.User.findOne({name: req.session.user.name}, function (err, user) {
+        models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
+          pushQueue(drink);
+          models.Shwasted.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:drink, _queue:{drink: drink, user: user}}}).exec();
+        });
+      })
+    }
+    else{
+      notify.push(req.session.user.name, "Not approved yet :( Find Keely or Arjun and ask them to approve you", 'warning');
+    }
   })
 }
 

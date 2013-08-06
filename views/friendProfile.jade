@@ -44,5 +44,5 @@ block content
                     h5= order.name
                   .small-2.columns
                     h5 $#{order.price}
-          if (!friend._orders)
-            h3 Dude you need to drink more :)
+          if (friend._orders.length == 0)
+            h3 This guy needs to drink more :)

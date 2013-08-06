@@ -15,9 +15,11 @@ todo:
 - ALERTS - part of layout!!
 
 - edit drinks...?
-  - delete drinks...for
+  - delete drinks...for now
 - view all users tabs  
 - dont allow duplicate drinks
+
+- click on user profile pic to redirect to their profile....? not important 
 
 - Update Side Nav
 - Side Navbar active links   

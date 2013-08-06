@@ -28,7 +28,9 @@ var shwastedSchema = new Schema({
 var Shwasted = mongoose.model('Shwasted', shwastedSchema);
 
 var drinkSchema = new Schema({
-  _liquids: [{_liquid:{ type: Schema.Types.ObjectId, ref: 'Liquid' }, units: Number}],
+  _liquids: [{
+    _liquid:{ type: Schema.Types.ObjectId, ref: 'Liquid' }, 
+    units: Number}],
   name: {type: String, unique: true},
   cost: Number,
   price: Number,
