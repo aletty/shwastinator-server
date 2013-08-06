@@ -58,8 +58,8 @@ html
     script(src="/socket.io/socket.io.js")
     if (me)
       script.
-        var notify = io.connect('http://shwastinator.herokuapp.com/notify');
-        //- var notify = io.connect('http://localhost:3000/notify');
+        //- var notify = io.connect('http://shwastinator.herokuapp.com/notify');
+        var notify = io.connect('http://localhost:3000/notify');
 
         notify.on('connect', function() {
           console.log('connected');
@@ -78,8 +78,8 @@ html
             $('.notifications').append('<div class="small-12 columns"><div data-alert class="alert-box success">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
           }
           setTimeout(function() {
-            $('.notifications').empty();
-          }, 4000);
+            $('.close').click();
+          }, 3500);
         });
 
     script.
