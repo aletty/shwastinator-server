@@ -7,8 +7,6 @@ todo:
   - Keep people from having duplicate usernames
   - Keep people from making blank passwords
 
-- Profile Picture change
-
 
 ADMIN
 - edit drinks...?
@@ -30,7 +28,6 @@ ADMIN
 
 IDEAS
   ???Tally marks for the night???be could cool... -> only visable to yourself..?
-  - See Other User profiles
   - Create new Drinks
   ????Cup size...?????
   ???should we care about alch types??? ie cosik vs smirnoff..
@@ -70,3 +67,5 @@ COMPLETED
 - make drink Queue
 - Update Side Nav 
 - Make drinks in orbit clickable
+- Profile Picture change
+- See Other User profiles

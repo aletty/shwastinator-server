@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  script(src="//api.filepicker.io/v1/filepicker.js")
   script.
     filepicker.setKey('AG4iSyAFR1ix7zdHsvAtKz');
   .row
@@ -12,7 +13,7 @@ block content
           .button#saveDrink Save Drink
           
   .row
-    .small-6.columns
+    .small-12.columns
       form#drinkForm
         .row
           .small-12.columns
@@ -21,15 +22,20 @@ block content
           .small-12.columns
             input#drinkname(type='text', placeholder = 'Rum and Coke');
         .row
-          .small-6.columns
+          .small-4.columns
             h5 Cost
-          .small-6.columns
+          .small-4.columns
             h5 Price
+          .small-4.columns
+
         .row
-          .small-6.columns
+          .small-4.columns
             input#cost(type='text', placeholder = '1.5');
-          .small-6.columns
+          .small-4.columns
             input#price(type='text', placeholder = '3');
+          .small-4.columns
+            .button#pickImage Choose Image
+
         .row
           .small-7.columns
             h5 Ingredients
@@ -51,9 +57,6 @@ block content
             &nbsp;
 
         .row#currentIngredients
-    .small-6.columns
-      div#dropPane
-        div#dropPane-name Drop Image Here
 
   script.
     var newDrink = {
@@ -86,38 +89,9 @@ block content
       return false;
     });
 
-    filepicker.makeDropPane($('#dropPane'), {
-      multiple: true,
-      dragEnter: function(){
-        $('#dropPane').html("Drop to Upload").css({
-          'backgroundColor': '#E0E0E0',
-          'border': '1px solid #000',
-          'height': '100%',
-          'min-height': '1em',
-          'position': 'relative',
-          'height': '2em',
-          'text-align': 'center',
-          'padding-top': '2%',          
-        });
-      },
-      dragLeave: function() {
-        $('#dropPane').html("Drop Image Here").css({
-            'background-color': '#F6F6F6',
-            'border': '1px solid #666',
-            'height': '100%',
-            'min-height': '1em',
-            'position': 'relative',
-            'height': '2em',
-            'text-align': 'center',
-            'padding-top': '2%',
-        });
-      },
-      onSuccess: function(InkBlobs){
+    $('#pickImage').click(function (){
+      filepicker.pickAndStore({mimetype: 'image/*'}, {}, function (InkBlobs){
         newDrink.image = InkBlobs[0].url+'/convert?w=203&h=306&fit=scale';
-        newDrink.imageSmall = InkBlobs[0].url+'/convert?w=61&h=92&fit=scale';
-      },
-      onProgress: function(percentage){
-        $('#dropPane').text('Uploading ('+percentage+'%)');
-      },
-      acess: 'public'
+        newDrink.imageSmall = InkBlobs[0].url+'/convert?w=61&h=92&fit=scale';      
+      });
     });

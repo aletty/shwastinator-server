@@ -52,6 +52,11 @@ exports.profile = function(req, res){
   });
 };
 
+exports.profilePic = function (req, res){
+  models.User.update({name: req.session.user.name}, {$set: {image: req.body.profilePic}}).exec();
+  res.send({redirect: '/profile'});
+}
+
 exports.signin = function(req, res){
     res.render('signin', {title: 'Shwastinator'});
 }
@@ -65,8 +70,8 @@ exports.create = function(req, res){
   var new_user = new models.User({name: req.body.username, password: hashedPassword, approved: false, tab:0, admin:false, _orders:[], isguest:false});
   new_user.save(function(err){
     if (err) return console.log("error while saving new user" + req.body.username, err);
-      req.session.user = new_user;
-      res.send({redirect: '/'}); 
+    req.session.user = new_user;
+    res.send({redirect: '/'}); 
   });
 }
 
