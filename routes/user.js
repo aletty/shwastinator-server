@@ -11,7 +11,7 @@ exports.profile = function(req, res){
     var now = new Date();
     var yesterday = now;
     yesterday.setDate(now.getDate()-1);
-    models.Shwasted.findOne({name:"Shwasted"}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){  
+    models.User.findOne({name: req.session.user.name}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){  
       var TopAllTime = topOrders(me._orders);
       var TopTonight = topOrders(recent._orders);
       console.log(TopTonight);
@@ -113,12 +113,13 @@ exports.allUsers = function(req, res){
 }
 
 exports.friendProfile = function(req, res){
-  models.User.findOne({name: req.params.friend}).populate('_orders').exec(function (err, user){
+  models.User.findOne({name: req.params.friend}).populate('_orders.order').exec(function (err, user){
+    console.log(user);
     var now = new Date();
     var yesterday = now;
     yesterday.setDate(now.getDate()-1);
-    models.Shwasted.findOne({name:"Shwasted"}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){  
-      var TopAllTime = topOrders(me._orders);
+    models.User.findOne({name:req.params.friend}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){  
+      var TopAllTime = topOrders(user._orders);
       var TopTonight = topOrders(recent._orders);
       console.log(TopTonight);
       console.log("Sorted Orders", TopAllTime);
