@@ -1,43 +1,34 @@
 todo:
 - Optimize pages for mobile
-- Drink Of the Night
-  - for the Whole Bar
-  - for users 
+- Update Side Nav
+- Side Navbar active links   
 - Limit display of recent drinks
+- Make drinks in orbit clickable
 
 - Simplify login code
   - Keep people from having duplicate usernames
   - Keep people from making blank passwords
 
+- Profile Picture change
 
-- Question for arjun - date.now() not viewable ..?? HI!
 
-- ALERTS - part of layout!!
-
+ADMIN
 - edit drinks...?
   - delete drinks...for now
 - view all users tabs  
 - dont allow duplicate drinks
-
-- click on user profile pic to redirect to their profile....? not important 
-
-- Update Side Nav
-- Side Navbar active links   
-- On the setup page have it default to the last liquid settings not just 'Empty'
-
-- Only allowed to order drinks when you are approved
-- Max tab - then block from ordering
-- display only drinks that we have ingredients for
-- list ingredients in drinks on order page.....??????
 - Check for duplicate drinks, liquids, usernames
-- photoshop images to correct ratio
-- log out
-- Make drinks in orbit clickable
 
-- timeout the notifications
+- On the setup page have it default to the last liquid settings not just 'Empty'
+- display only drinks that we have ingredients for
 
-- make drink Queue
-  - have ability to cancel your own drink ?
+- Max tab - then block from ordering
+- Unapprove Users
+
+
+- list ingredients in drinks on order page.... hover over and swipe for the view - frosted with black writing 
+
+- have ability to cancel your own drink ?
 
 IDEAS
   ???Tally marks for the night???be could cool... -> only visable to yourself..?
@@ -50,10 +41,9 @@ IDEAS
 BUGS!
 - orbit bullets not showing on ios or android
 
-
-
 TWEAKS
 - remove add guest button on profile
+- click on user profile pic to redirect to their profile....? not important
 
 COMPLETED
 - Admin Page to aprove new users
@@ -71,3 +61,13 @@ COMPLETED
 - All time favorite Drinks
   - for the whole Bar
   - For Users
+- Drink Of the Night
+  - for the Whole Bar
+  - for users
+- ALERTS - part of layout!!
+- Date associated with each order HI!
+- Only allowed to order drinks when you are approved
+- log out
+- timeout the notifications
+- make drink Queue
+
