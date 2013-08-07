@@ -140,7 +140,7 @@ exports.friendProfile = function(req, res){
     var now = new Date();
     var yesterday = now;
     yesterday.setDate(now.getDate()-1);
-    if (user._orders){
+    if (user && user._orders){
       var TopAllTime = topOrders(user._orders);
       var now = new Date();
       var yesterday = now;

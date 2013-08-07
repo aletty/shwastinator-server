@@ -5,7 +5,10 @@ block content
     .small-12.columns
       .row
         .small-4.columns
-          img(src=friend.image).th
+          if (friend.image == 'default_prof.jpg')
+            imge(src='../' + friend.image).th 
+          else  
+            img(src=friend.image).th
         .small-8.columns
           h1 #{friend.name}
       br
