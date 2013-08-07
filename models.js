@@ -5,7 +5,10 @@ var userSchema = new Schema({
   name: {type: String, unique: true},
   password: {type: String, required: true},
   approved: Boolean,
-  _orders: [{type: Schema.Types.ObjectId, ref: 'Drink', time: Date.now }],
+  _orders: [{
+    order: {type: Schema.Types.ObjectId, ref: 'Drink'}, 
+    time: Date
+  }],
   tab: Number,
   image: String,
   guest: [{type: Schema.Types.ObjectId, ref: 'User'}],
@@ -17,7 +20,10 @@ var User = mongoose.model('User', userSchema);
 
 var shwastedSchema = new Schema({
   name: String,
-  _orders: [{type: Schema.Types.ObjectId, ref: 'Drink', time: Date.now}],
+  _orders: [{
+    order: {type: Schema.Types.ObjectId, ref: 'Drink'}, 
+    time: Date
+  }],
   _queue: [{
     drink: {type: Schema.Types.ObjectId, ref: 'Drink'}, 
     user: {type: Schema.Types.ObjectId, ref: 'User'}

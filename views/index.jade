@@ -3,6 +3,15 @@ extends layout
 block content
   if (topDrinks)
     .row
+      .small-8.columns
+        br
+      .small-4.columns
+        .switch.round
+          input#x(name='switch-x', type='radio', checked='checked')
+          label(for='x', onclick='') Tonight
+          input#x1(name='switch-x', type='radio')
+          label(for='x1', onclick='') All Time
+    .row
       .small-12.columns
         .slideshow-wrapper
           .preloader

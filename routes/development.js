@@ -68,7 +68,7 @@ exports.drinks = function(req, res){
         if (err) return ("error saving Gin", err);
         console.log('Gin saved');
     });
-    var gingerAle = new models.Liquid({name: "Ginger Ale", type: "Soda", alcoholic: true});
+    var gingerAle = new models.Liquid({name: "Ginger Ale", type: "Soda", alcoholic: false});
     gingerAle.save(function(err){
         if (err) return ("error saving Ginger Ale", err);
         console.log('Ginger Ale saved');

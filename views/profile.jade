@@ -40,10 +40,10 @@ block content
               .panel
                 .row
                   .small-3.columns
-                    img(src=order.imageSmall)
+                    img(src=order.order.imageSmall)
                   .small-7.columns
-                    h5= order.name
+                    h5= order.order.name
                   .small-2.columns
-                    h5 $#{order.price}
+                    h5 $#{order.order.price}
           if (me._orders.length ==0)
             h3 Dude you need to drink more :)

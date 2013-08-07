@@ -6,33 +6,41 @@
 var models = require('../models');
 
 exports.index = function(req, res){
-  models.Shwasted.findOne({name:"Shwasted"}).populate('_orders').exec(function (err, user){
-    var sortedOrders = topOrders(user._orders);
-    console.log(sortedOrders);
-    models.Drink.find().exec(function (err, drinks){
-      if (sortedOrders.length >= 3) {
-        models.Drink.find({$or: [ {name: sortedOrders[0][0]}, {name: sortedOrders[1][0]}, {name: sortedOrders[2][0]}]}).exec(function (err, topDrinks){
-          console.log(topDrinks);
-          res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks});
-        });
-      } else {
-        res.render('index', {title: 'Shwastinator', me:req.session.user, drinks:drinks});
-      }
+  models.Shwasted.findOne({name:"Shwasted"}).populate('_orders.order').exec(function (err, user){    
+    var now = new Date();
+    var yesterday = now;
+    yesterday.setDate(now.getDate()-1);
+    models.Shwasted.findOne({name:"Shwasted"}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){   
+      var TopAllTime = topOrders(user._orders);
+      var TopTonight = topOrders(recent._orders);
+      console.log(TopTonight);
+      console.log("Sorted Orders", TopAllTime);
+      models.Drink.find().exec(function (err, drinks){
+        if (TopAllTime.length >= 3) {
+          models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+            console.log(topDrinks);
+            res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks});
+          });
+        } else {
+          res.render('index', {title: 'Shwastinator', me:req.session.user, drinks:drinks});
+        }
+      });
     });
   });
 };
 
 function topOrders(_orders) {
   if (_orders){
-    //takes name of liquid and pump number
+
     var hist = {};
     for (var i=0; i<_orders.length; i++){
-      if(!hist[_orders[i].name]){
-        hist[_orders[i].name]=1;
+      if(!hist[_orders[i].order.name]){
+        hist[_orders[i].order.name]=1;
       }
       else
-        hist[_orders[i].name]= hist[_orders[i].name]+1;
+        hist[_orders[i].order.name]= hist[_orders[i].order.name]+1;
     }
+    console.log(hist);
     var sortable = [];
     for (var drink in hist)
       sortable.push([drink, hist[drink]])
@@ -45,7 +53,6 @@ function topOrders(_orders) {
 
 exports.queue = function(req, res) {
   models.Shwasted.findOne({name:"Shwasted"}).populate('_queue.drink _queue.user').exec(function (err, shwasted) {
-    console.log(shwasted);
     res.render('queue',{title: 'Shwastinator', me: req.session.user, shwasted: shwasted});
   });
 }

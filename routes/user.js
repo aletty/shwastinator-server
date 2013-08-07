@@ -6,9 +6,9 @@ var models = require("../models.js");
 var bcrypt = require('bcrypt');
 var notify = require('../utils/notify.js');
 
-
 exports.profile = function(req, res){
-  models.User.findOne({name: req.session.user.name}).populate('_orders').exec(function (err, me){
+  models.User.findOne({name: req.session.user.name}).populate('_orders.order').exec(function (err, me){
+    console.log(me);
     var sortedOrders = topOrders(me._orders);
     if(sortedOrders.length>=3){
       models.Drink.find({$or: [ {name: sortedOrders[0][0]}, {name: sortedOrders[1][0]}, {name: sortedOrders[2][0]}]}).exec(function (err, topDrinks){
@@ -69,7 +69,7 @@ exports.orderDrink = function(req, res){
   models.User.findOne({name:req.session.user.name}).exec(function (err, user){
     if(user.approved){
       models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
-        models.User.update({name:req.session.user.name}, {$inc: {tab: drink.price}, $push: {_orders:drink}}, function (err, numAffected, raw) {
+        models.User.update({name:req.session.user.name}, {$inc: {tab: drink.price}, $push: {_orders:{order:drink, time:new Date()}}}, function (err, numAffected, raw) {
           if (err) {
             notify.push(req.session.user.name, err, 'warning');
           } else {
@@ -80,7 +80,7 @@ exports.orderDrink = function(req, res){
       models.User.findOne({name: req.session.user.name}, function (err, user) {
         models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
           pushQueue(drink);
-          models.Shwasted.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:drink, _queue:{drink: drink, user: user}}}).exec();
+          models.Shwasted.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:{order: drink, time:new Date()}, _queue:{drink: drink, user: user}}}).exec();
         });
       })
     }
@@ -115,11 +115,11 @@ function topOrders(_orders) {
     //takes name of liquid and pump number
   var hist = {};
   for (var i=0; i<_orders.length; i++){
-    if(!hist[_orders[i].name]){
-      hist[_orders[i].name]=1;
+    if(!hist[_orders[i].order.name]){
+      hist[_orders[i].order.name]=1;
     }
     else
-      hist[_orders[i].name]= hist[_orders[i].name]+1;
+      hist[_orders[i].order.name]= hist[_orders[i].order.name]+1;
   }
   var sortable = [];
   for (var drink in hist)
