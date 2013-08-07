@@ -22,15 +22,26 @@ block content
                 input#x1(name='switch-x', type='radio')
                 label(for='x1', onclick='') All Time
           if (topDrinks)
-            for drink in topDrinks.reverse()
-              .panel
-                .row
-                  .small-3.columns
-                    img(src=drink.imageSmall)
-                  .small-7.columns
-                    h5= drink.name
-                  .small-2.columns
-                    h5 $#{drink.price}
+            .AllTime.hide
+              for drink in topDrinks.reverse()
+                .panel
+                  .row
+                    .small-3.columns
+                      img(src=drink.imageSmall)
+                    .small-7.columns
+                      h5= drink.name
+                    .small-2.columns
+                      h5 $#{drink.price}
+            .Tonight
+              for drink in topTonight.reverse()
+                .panel
+                  .row
+                    .small-3.columns
+                      img(src=drink.imageSmall)
+                    .small-7.columns
+                      h5= drink.name
+                    .small-2.columns
+                      h5 $#{drink.price}
           if (!topDrinks)
             h3 Hey Man! Try mixing it up a little!
         .large-6.small-12.pull-6.columns
@@ -47,3 +58,13 @@ block content
                     h5 $#{order.order.price}
           if (me._orders.length ==0)
             h3 Dude you need to drink more :)
+
+  script.
+    $('#x1').click(function(){
+      $(".AllTime").removeClass('hide');
+      $(".Tonight").addClass('hide');
+    })
+    $('#x').click(function(){
+      $(".Tonight").removeClass('hide');
+      $(".AllTime").addClass('hide');
+    })

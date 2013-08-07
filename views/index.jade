@@ -11,12 +11,23 @@ block content
           label(for='x', onclick='') Tonight
           input#x1(name='switch-x', type='radio')
           label(for='x1', onclick='') All Time
-    .row
+    .row.AllTime.hide
       .small-12.columns
         .slideshow-wrapper
           .preloader
           ul(data-orbit='data-orbit')#featured1
             for drink in topDrinks
+              li
+                .row
+                  .small-12.columns#wrap-img
+                    img(src=drink.image)
+                .orbit-caption #{drink.name} $#{drink.price}
+    .row.Tonight
+      .small-12.columns
+        .slideshow-wrapper
+          .preloader
+          ul(data-orbit='data-orbit')#featured2
+            for drink in topTonight
               li
                 .row
                   .small-12.columns#wrap-img
@@ -32,3 +43,11 @@ block content
       $.post('/orderDrink', {drinkOrdered: $(this).attr('data-caption')})
       return false;
     });
+    $('#x1').click(function(){
+      $(".AllTime").removeClass('hide');
+      $(".Tonight").addClass('hide');
+    })
+    $('#x').click(function(){
+      $(".Tonight").removeClass('hide');
+      $(".AllTime").addClass('hide');
+    })
