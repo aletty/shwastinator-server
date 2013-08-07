@@ -2,7 +2,6 @@ todo:
 - Optimize pages for mobile
 - Side Navbar active links   
 - Limit display of recent drinks
-- Make drinks in orbit clickable
 
 - Simplify login code
   - Keep people from having duplicate usernames
@@ -69,4 +68,5 @@ COMPLETED
 - log out
 - timeout the notifications
 - make drink Queue
-- Update Side Nav
+- Update Side Nav 
+- Make drinks in orbit clickable

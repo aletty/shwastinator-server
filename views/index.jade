@@ -20,7 +20,7 @@ block content
               li
                 .row
                   .small-12.columns#wrap-img
-                    img(src=drink.image)
+                    img(src=drink.image, data-caption=drink.name).order
                 .orbit-caption #{drink.name} $#{drink.price}
     .row.Tonight
       .small-12.columns
@@ -31,7 +31,7 @@ block content
               li
                 .row
                   .small-12.columns#wrap-img
-                    img(src=drink.image)
+                    img(src=drink.image, data-caption=drink.name).order
                 .orbit-caption #{drink.name} $#{drink.price}
   .row
     .small-12.columns
