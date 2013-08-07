@@ -8,16 +8,32 @@ var notify = require('../utils/notify.js');
 
 exports.profile = function(req, res){
   models.User.findOne({name: req.session.user.name}).populate('_orders.order').exec(function (err, me){
-    console.log(me);
-    var sortedOrders = topOrders(me._orders);
-    if(sortedOrders.length>=3){
-      models.Drink.find({$or: [ {name: sortedOrders[0][0]}, {name: sortedOrders[1][0]}, {name: sortedOrders[2][0]}]}).exec(function (err, topDrinks){
-        console.log(sortedOrders);
-        res.render('profile', {title: me.name, me: me, topDrinks:topDrinks});
+    var now = new Date();
+    var yesterday = now;
+    yesterday.setDate(now.getDate()-1);
+    models.Shwasted.findOne({name:"Shwasted"}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){  
+      var TopAllTime = topOrders(me._orders);
+      var TopTonight = topOrders(recent._orders);
+      console.log(TopTonight);
+      console.log("Sorted Orders", TopAllTime);
+      models.Drink.find().exec(function (err, drinks){
+        if (TopTonight.length >= 3) {
+          models.Drink.find({$or: [ {name: TopTonight[0][0]}, {name: TopTonight[1][0]}, {name: TopTonight[2][0]}]}).exec(function (err, topTonight){
+            models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+              res.render('profile', { title: 'Shwastinator', me:me, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
+            });
+          });
+        } else {
+          if (TopAllTime.length >= 3) {
+            models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+              res.render('profile', { title: 'Shwastinator', me:me, drinks:drinks, topDrinks:topDrinks});
+            });
+          } else {
+            res.render('profile', {title: 'Shwastinator', me:me, drinks:drinks});            
+          }
+        }
       });
-    } else {
-      res.render('profile', {title: me.name, me: me});
-    }
+    });
   });
 };
 
@@ -97,18 +113,35 @@ exports.allUsers = function(req, res){
 
 exports.friendProfile = function(req, res){
   models.User.findOne({name: req.params.friend}).populate('_orders').exec(function (err, user){
-    var sortedOrders = topOrders(user._orders)
-    if(sortedOrders.length>=3){
-      models.Drink.find({$or: [ {name: sortedOrders[0][0]}, {name: sortedOrders[1][0]}, {name: sortedOrders[2][0]}]}).exec(function (err, topDrinks){
-        console.log(sortedOrders);
-        console.log(topOrders);
-        res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks});
+    var now = new Date();
+    var yesterday = now;
+    yesterday.setDate(now.getDate()-1);
+    models.Shwasted.findOne({name:"Shwasted"}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){  
+      var TopAllTime = topOrders(me._orders);
+      var TopTonight = topOrders(recent._orders);
+      console.log(TopTonight);
+      console.log("Sorted Orders", TopAllTime);
+      models.Drink.find().exec(function (err, drinks){
+        if (TopTonight.length >= 3) {
+          models.Drink.find({$or: [ {name: TopTonight[0][0]}, {name: TopTonight[1][0]}, {name: TopTonight[2][0]}]}).exec(function (err, topTonight){
+            models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+              res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks, topTonight:topTonight});
+            });
+          });
+        } else {
+          if (TopAllTime.length >= 3) {
+            models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+              res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks});
+            });
+          } else {
+            res.render('friendProfile', {title: user.name, me: req.session.user, friend: user});            
+          }
+        }
       });
-    } else {
-      res.render('friendProfile', {title: user.name, me: req.session.user, friend: user});
-    }  
+    });
   });
 };
+
 
 function topOrders(_orders) {
     //takes name of liquid and pump number
