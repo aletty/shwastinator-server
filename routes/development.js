@@ -36,6 +36,21 @@ exports.createUsers = function(req, res){
     res.send("Users created");
 }
 
+exports.addOrder = function(req, res) {
+    var date = new Date()
+    date.setDate(date.getDate()-2);
+    models.Drink.findOne({name: "Rum and Coke"}).populate('_liquids._liquid').exec(function (err, drink) {
+        models.User.update({name:"Keely"}, {$inc: {tab: drink.price}, $push: {_orders:{order:drink, time:date}}}, function (err, numAffected, raw) {
+          if (err) {
+            console.log("error adding Rum and Coke");
+          } else {
+            console.log("Added Rum and Coke");
+            res.send(date, "Rum and coke");
+          }
+        });
+    });
+}
+
 exports.drinks = function(req, res){
     // Populate database with liquids and drinks
     var empty = new models.Liquid({name: "Empty", type: "nothing", alcoholic: false});
@@ -77,6 +92,11 @@ exports.drinks = function(req, res){
     gandga.save(function(err){
         if (err) return ("error saving Gin and Ginger Ale", err);
         console.log('Gin and Ginger Ale saved');
+    });
+    var goke = new models.Drink({_liquids: [{_liquid:gin, units:1}, {_liquid:coke, units:3}], name: "Goke", cost: 1, price: 2, image: "/images/goke.jpg", imageSmall: '/images/goke-small.jpg'});
+    goke.save(function(err){
+        if (err) return ("error saving Goke", err);
+        console.log('Goke saved');
     });
     var randc = new models.Drink({_liquids: [{_liquid:rum, units:1}, {_liquid:coke, units:3}], name: "Rum and Coke", cost: 1.5, price: 3, image: "/images/randc.jpg", imageSmall: '/images/randc-small.jpg'});
     randc.save(function(err){
