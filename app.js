@@ -7,7 +7,7 @@ var express = require('express')
 var app = express();
 
 var server = require('http').createServer(app)
-  , io = require('socket.io').listen(server)
+  , io = require('socket.io').listen(server, {log: false})
   , routes = require('./routes')
   , user = require('./routes/user')
   , bcrypt = require('bcrypt')
@@ -111,8 +111,10 @@ io.configure(function () {
 
 //pi communication
 io.of('/pi').on('connection', function (socket) {
-  socket.on('push queue', function(data){
+  socket.on('update queue', function(data){
     socket.broadcast.emit('new drink', data);
+    console.log('pushing');
+    console.log(data);
   });
 
   socket.on('finish drink', function(){

@@ -84,7 +84,7 @@ exports.logout = function(req,res){
 exports.orderDrink = function(req, res){
   models.User.findOne({name:req.session.user.name}).exec(function (err, user){
     if(user.approved){
-      models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
+      models.Drink.findOne({name: req.body.drinkOrdered}).populate('_liquids._liquid').exec(function (err, drink) {
         models.User.update({name:req.session.user.name}, {$inc: {tab: drink.price}, $push: {_orders:{order:drink, time:new Date()}}}, function (err, numAffected, raw) {
           if (err) {
             notify.push(req.session.user.name, err, 'warning');
@@ -92,13 +92,12 @@ exports.orderDrink = function(req, res){
             notify.push(req.session.user.name, req.body.drinkOrdered + ' ordered', 'success');
           }
         });
-      });
-      models.User.findOne({name: req.session.user.name}, function (err, user) {
-        models.Drink.findOne({name: req.body.drinkOrdered}, function (err, drink) {
-          pushQueue(drink);
-          models.Shwasted.update({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:{order: drink, time:new Date()}, _queue:{drink: drink, user: user}}}).exec();
+        models.Shwasted.findOneAndUpdate({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:{order: drink, time:new Date()}, _queue:{drink: drink, user: user}}}).exec(function (err, shwasted) {
+          if (shwasted._queue.length == 1) {
+            pushQueue(drink, user);
+          }
         });
-      })
+      });
     }
     else{
       notify.push(req.session.user.name, "Not approved yet :( Find Keely or Arjun and ask them to approve you", 'warning');
@@ -181,13 +180,20 @@ exports.newGuest = function(req, res){
 var io = require('socket.io-client');
 //Keely if it complains when on localhost comment out the herokuapp line and uncomment the localhost
 var socket = io.connect('http://shwastinator.herokuapp.com/pi');
-// var socket = io.connect('http://localhost:3000/notify');
+// var socket = io.connect('http://localhost:3000/pi');
 
-function pushQueue(drink) {
-  //drink to e queuadd to the queue
-  socket.emit('update queue', {drink: drink});
+function pushQueue(drink, user) {
+  //drink to the queue
+  socket.emit('update queue', {drink: drink, user: user});
 }
 
 socket.on('shift queue', function(){
-  models.User.update({name:"Shwasted"}, {$pop: {_queue:-1}}).exec();
+  models.Shwasted.update({name:"Shwasted"}, {$pop: {_queue:-1}}).exec();
+  models.Shwasted.findOne({name:"Shwasted"}).exec(function (err, shwasted) {
+    if (shwasted._queue.length > 0){
+      models.Drink.findById(shwasted._queue[0].drink).populate('_liquids._liquid').exec(function (err, drink) {
+        pushQueue(drink, ' ');
+      });      
+    }
+  });
 });

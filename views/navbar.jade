@@ -1,44 +1,45 @@
-nav.top-bar.hide-for-small
-  ul.title-area
-    li.name
-      h1
-        a(href='/') Shwastinator
-    li.toggle-topbar.menu-icon
-      a(href='#')
-        span
-  section.top-bar-section
-    ul.right
-      li
-        a(href='/') Order a Drink!
-      li
-        a(href='/queue') Queue
-      li
-        a(href='/allUsers') All Users
-      if (me.admin)
+.fixed
+  nav.top-bar.hide-for-small
+    ul.title-area
+      li.name
+        h1
+          a(href='/') Shwastinator
+      li.toggle-topbar.menu-icon
+        a(href='#')
+          span
+    section.top-bar-section
+      ul.right
+        li
+          a(href='/') Order a Drink!
+        li
+          a(href='/queue') Queue
+        li
+          a(href='/allUsers') All Users
+        if (me.admin)
+          li.divider
+          li.has-dropdown
+            a(href='/admin') Admin
+            ul.dropdown 
+              li
+                a(href='/admin') Set Up
+              li
+                a(href='/liquid') Add liquid
+              li
+                a(href='/createDrinks') Add Drink
+              li
+                a(href='/approveUsers') Approve Users
+              li
+                a(href='/logPayment') Log Payment
         li.divider
         li.has-dropdown
-          a(href='/admin') Admin
-          ul.dropdown 
+          a(href='/profile') #{me.name}
+          ul.dropdown
             li
-              a(href='/admin') Set Up
+              a(href='/profile') Profile
             li
-              a(href='/liquid') Add liquid
+              a(href='/addGuest') Add Guest
             li
-              a(href='/createDrinks') Add Drink
-            li
-              a(href='/approveUsers') Approve Users
-            li
-              a(href='/logPayment') Log Payment
-      li.divider
-      li.has-dropdown
-        a(href='/profile') #{me.name}
-        ul.dropdown
-          li
-            a(href='/profile') Profile
-          li
-            a(href='/addGuest') Add Guest
-          li
-            a(href='/logout') Log Out
+              a(href='/logout') Log Out
 
 
 script.
