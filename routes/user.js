@@ -178,8 +178,8 @@ exports.newGuest = function(req, res){
 //queue management
 var io = require('socket.io-client');
 //Keely if it complains when on localhost comment out the herokuapp line and uncomment the localhost
-// var socket = io.connect('http://shwastinator.herokuapp.com/pi');
-var socket = io.connect('http://localhost:3000/pi');
+var socket = io.connect('http://shwastinator.herokuapp.com/pi');
+// var socket = io.connect('http://localhost:3000/pi');
 
 function pushQueue(drink, user) {
   //drink to the queue
