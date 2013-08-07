@@ -132,6 +132,9 @@ exports.allUsers = function(req, res){
 }
 
 exports.friendProfile = function(req, res){
+  if (req.params.friend == req.session.user.name) {
+    res.redirect('/profile');
+  }
   models.User.findOne({name: req.params.friend}).populate('_orders.order').exec(function (err, user){
     console.log(user);
     var now = new Date();
