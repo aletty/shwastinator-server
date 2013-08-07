@@ -137,36 +137,45 @@ exports.friendProfile = function(req, res){
     var now = new Date();
     var yesterday = now;
     yesterday.setDate(now.getDate()-1);
-    models.User.findOne({name:req.params.friend}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){  
-      if (me._orders){
-        var TopAllTime = topOrders(me._orders);
-      } else{
-        var TopAllTime = [];
-      };
-      if (recent._orders){
-        var TopTonight = topOrders(recent._orders);
-      } else {
-        var topTonight = []
+    if (user._orders){
+      var TopAllTime = topOrders(user._orders);
+      var now = new Date();
+      var yesterday = now;
+      yesterday.setDate(now.getDate()-1);
+      var recentOrders = [];
+      for (var i=0; i<user._orders.length; i++){
+        console.log(user._orders[i].time);
+        if(user._orders[i].time>yesterday){
+          recentOrders.push(user._orders[i]);
+        }
       }
-      console.log(TopTonight);
-      console.log("Sorted Orders", TopAllTime);
-      models.Drink.find().exec(function (err, drinks){
-        if (TopTonight.length >= 3) {
-          models.Drink.find({$or: [ {name: TopTonight[0][0]}, {name: TopTonight[1][0]}, {name: TopTonight[2][0]}]}).exec(function (err, topTonight){
-            models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
-              res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks, topTonight:topTonight});
-            });
+      if (recentOrders.length>0){
+        var TopTonight = topOrders(recentOrders);
+      } else {
+        var TopTonight = [];
+      }
+    } else{
+      var TopAllTime = [];
+      var TopTonight = [];
+    };
+    console.log("Top Tonight",TopTonight);
+    console.log("Sorted Orders", TopAllTime);
+    models.Drink.find().exec(function (err, drinks){
+      if (TopTonight.length >= 3) {
+        models.Drink.find({$or: [ {name: TopTonight[0][0]}, {name: TopTonight[1][0]}, {name: TopTonight[2][0]}]}).exec(function (err, topTonight){
+          models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+            res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks, topTonight:topTonight});
+          });
+        });
+      } else {
+        if (TopAllTime.length >= 3) {
+          models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+            res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks});
           });
         } else {
-          if (TopAllTime.length >= 3) {
-            models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
-              res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks});
-            });
-          } else {
-            res.render('friendProfile', {title: user.name, me: req.session.user, friend: user});            
-          }
+          res.render('friendProfile', {title: user.name, me: req.session.user, friend: user});            
         }
-      });
+      }
     });
   });
 };
