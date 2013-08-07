@@ -12,7 +12,11 @@ exports.index = function(req, res){
     yesterday.setDate(now.getDate()-1);
     models.Shwasted.findOne({name:"Shwasted"}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){   
       var TopAllTime = topOrders(user._orders);
-      var TopTonight = topOrders(recent._orders);
+      if (recent) {
+        var TopTonight = topOrders(recent._orders);
+      } else {
+        var TopTonight = [];
+      }
       console.log(TopTonight);
       console.log("Sorted Orders", TopAllTime);
       models.Drink.find().exec(function (err, drinks){
