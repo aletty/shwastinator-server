@@ -101,7 +101,6 @@ app.post('/credit', admin.credit);
 app.get('/addGuest', checkLoggedIn(), user.addGuest);
 app.post('/newGuest', checkLoggedIn(), user.newGuest);
 app.get('/queue', checkLoggedIn(), index.queue);
-app.get('/order', dev.addOrder);
 
 server.listen(app.get('port'));
 
