@@ -138,15 +138,15 @@ exports.friendProfile = function(req, res){
     var yesterday = now;
     yesterday.setDate(now.getDate()-1);
     models.User.findOne({name:req.params.friend}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){  
-      if (me._orders){
-        var TopAllTime = topOrders(me._orders);
+      if (user._orders){
+        var TopAllTime = topOrders(user._orders);
       } else{
         var TopAllTime = [];
       };
-      if (recent._orders){
+      if (recent){
         var TopTonight = topOrders(recent._orders);
       } else {
-        var topTonight = []
+        var TopTonight = []
       }
       console.log(TopTonight);
       console.log("Sorted Orders", TopAllTime);

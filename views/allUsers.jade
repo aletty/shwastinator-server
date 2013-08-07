@@ -9,7 +9,7 @@ block content
         .row.panel.eachUser(name= '#{user.name}')
           a(href='/friendProfile/#{user.name}')
             .small-2.columns
-              img(src='default_prof.jpg', width='60', height='60')
+              img(src= user.image, width='60', height='60')
             .small-10.columns
               h5 #{user.name}
 
