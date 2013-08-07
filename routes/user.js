@@ -114,7 +114,7 @@ exports.friendProfile = function(req, res){
 function topOrders(_orders) {
     //takes name of liquid and pump number
   var hist = {};
-  for (var i=0; i<_orders.t length; i++){
+  for (var i=0; i<_orders.length; i++){
     if(!hist[_orders[i].order.name]){
       hist[_orders[i].order.name]=1;
     }

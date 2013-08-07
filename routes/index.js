@@ -16,13 +16,20 @@ exports.index = function(req, res){
       console.log(TopTonight);
       console.log("Sorted Orders", TopAllTime);
       models.Drink.find().exec(function (err, drinks){
-        if (TopAllTime.length >= 3) {
-          models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
-            console.log(topDrinks);
-            res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks});
+        if (TopTonight.length >= 3) {
+          models.Drink.find({$or: [ {name: TopTonight[0][0]}, {name: TopTonight[1][0]}, {name: TopTonight[2][0]}]}).exec(function (err, topTonight){
+            models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+              res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
+            });
           });
         } else {
-          res.render('index', {title: 'Shwastinator', me:req.session.user, drinks:drinks});
+          if (TopAllTime.length >= 3) {
+            models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+              res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks});
+            });
+          } else {
+            res.render('index', {title: 'Shwastinator', me:req.session.user, drinks:drinks});            
+          }
         }
       });
     });
