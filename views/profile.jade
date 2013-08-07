@@ -1,11 +1,14 @@
 extends layout
 
 block content
+  script(src="//api.filepicker.io/v1/filepicker.js")
+  script.
+    filepicker.setKey('AG4iSyAFR1ix7zdHsvAtKz');
   .row 
     .small-12.columns
       .row
         .small-4.columns
-          img(src='default_prof.jpg').th
+          img(src=me.image).th#profilePic
         .small-8.columns
           h1 #{me.name}
           h3 Current Tab $#{me.tab}
@@ -63,8 +66,23 @@ block content
     $('#x1').click(function(){
       $(".AllTime").removeClass('hide');
       $(".Tonight").addClass('hide');
-    })
+    });
     $('#x').click(function(){
       $(".Tonight").removeClass('hide');
       $(".AllTime").addClass('hide');
-    })
+    });
+    $('#profilePic').click(function (){
+      filepicker.pickAndStore({mimetype: 'image/*'}, {}, function (InkBlobs){
+        $.ajax({
+          url: '/profilePic',
+          type: 'POST',
+          data: {profilePic: InkBlobs[0].url+'/convert?w=160&h=160&fit=clip'},
+          dataType: 'json',
+          success: function(data) {
+            if (typeof data.redirect == 'string') {
+              window.location = data.redirect;  
+            }
+          }
+        });
+      });
+    });

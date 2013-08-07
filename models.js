@@ -10,7 +10,7 @@ var userSchema = new Schema({
     time: Date
   }],
   tab: Number,
-  image: String,
+  image: {type: String, default: 'default_prof.jpg'},
   guest: [{type: Schema.Types.ObjectId, ref: 'User'}],
   admin: Boolean,
   isguest: Boolean

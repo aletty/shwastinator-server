@@ -79,6 +79,7 @@ app.get('/testFlash', checkLoggedIn(), dev.testFlash);
 app.get('/signup', user.signup);
 app.get('/signin', user.signin);
 app.get('/profile',  checkLoggedIn(), user.profile);
+app.post('/profilePic', checkLoggedIn(), user.profilePic);
 app.get('/admin', checkAdmin(), admin.home);
 app.post('/newUser', user.create);
 app.get('/liquid', checkAdmin(), admin.liquid);
