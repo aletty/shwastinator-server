@@ -113,6 +113,8 @@ io.configure(function () {
 io.of('/pi').on('connection', function (socket) {
   socket.on('update queue', function(data){
     socket.broadcast.emit('new drink', data);
+    console.log('pushing');
+    console.log(data);
   });
 
   socket.on('finish drink', function(){
