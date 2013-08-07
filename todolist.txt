@@ -1,6 +1,5 @@
 todo:
 - Optimize pages for mobile
-- Update Side Nav
 - Side Navbar active links   
 - Limit display of recent drinks
 - Make drinks in orbit clickable
@@ -70,4 +69,4 @@ COMPLETED
 - log out
 - timeout the notifications
 - make drink Queue
-
+- Update Side Nav
