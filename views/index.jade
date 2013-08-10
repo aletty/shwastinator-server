@@ -22,7 +22,8 @@ block content
                   .small-12.columns#wrap-img
                     img(src=drink.image, data-caption=drink.name).order
                 .orbit-caption #{drink.name} $#{drink.price}
-    .row.Tonight
+    if (topTonight)
+      .row.Tonight
       .small-12.columns
         .slideshow-wrapper
           .preloader

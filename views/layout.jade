@@ -10,6 +10,7 @@ html
     link(rel='stylesheet', href='/stylesheets/foundation.css')
     link(rel='stylesheet', href='/stylesheets/normalize.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/toastr.css')
     script(src='/javascripts/vendor/custom.modernizr.js')
     script(src="/socket.io/socket.io.js")
     script(src="/javascripts/vendor/jquery.js")
@@ -54,6 +55,7 @@ html
     script(src="/javascripts/foundation.min.js")
     script(src="/javascripts/jquery.offcanvas.js")
     script(src="/socket.io/socket.io.js")
+    script(src="/javascripts/toastr.js")
     if (me)
       script.
         var notify = io.connect('http://shwastinator.herokuapp.com/notify');
@@ -64,20 +66,18 @@ html
           notify.emit('user', {name: '#{me.name}'});
         });
 
+        toastr.options = {
+          "debug": false,
+          "positionClass": "toast-top-right",
+          "onclick": null,
+          "fadeIn": 300,
+          "fadeOut": 1000,
+          "timeOut": 5000,
+          "extendedTimeOut": 1000
+        }
+
         notify.on('update', function(data) {
-          console.log(data);
-          if (data.type == 'info'){
-            $('.notifications').append('<div class="small-12 columns"><div data-alert class="alert-box secondary">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
-          }
-          if (data.type == 'warning'){
-            $('.notifications').append('<div class="small-12 columns"><div data-alert class="alert-box alert">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
-          }
-          if (data.type == 'success'){
-            $('.notifications').append('<div class="small-12 columns"><div data-alert class="alert-box success">'+ data.notification +'<a href="#" class="close">&times;</a></div></div>');
-          }
-          setTimeout(function() {
-            $('.close').click();
-          }, 3500);
+          toastr[data.type](data.notification);
         });
 
     script.
