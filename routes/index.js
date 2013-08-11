@@ -7,39 +7,45 @@ var models = require('../models');
 
 exports.index = function(req, res){
   models.Shwasted.findOne({name:"Shwasted"}).populate('_orders.order').exec(function (err, user){    
-    var now = new Date();
-    var yesterday = now;
-    yesterday.setDate(now.getDate()-1);
-    models.Shwasted.findOne({name:"Shwasted"}).populate('_orders.order').where('_orders.time').gt(yesterday).exec(function (err, recent){
-      if (user._orders){
-        var TopAllTime = topOrders(user._orders);
-      } else {
-        var TopAllTime = [];
+    if (user._orders){
+      var TopAllTime = topOrders(user._orders);
+      var now = new Date();
+      var yesterday = now;
+      yesterday.setDate(now.getDate()-1);
+      var recentOrders = [];
+      for (var i=0; i<user._orders.length; i++){
+        console.log(user._orders[i].time);
+        if(user._orders[i].time>yesterday){
+          recentOrders.push(user._orders[i]);
+        }
       }
-      if (recent) {
-        var TopTonight = topOrders(recent._orders);
+      if (recentOrders.length>0){
+        var TopTonight = topOrders(recentOrders);
       } else {
         var TopTonight = [];
       }
-      console.log(TopTonight);
-      console.log("Sorted Orders", TopAllTime);
-      models.Drink.find().exec(function (err, drinks){
-        if (TopTonight.length >= 3) {
-          models.Drink.find({$or: [ {name: TopTonight[0][0]}, {name: TopTonight[1][0]}, {name: TopTonight[2][0]}]}).exec(function (err, topTonight){
-            models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
-              res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
-            });
+    } else{
+      var TopAllTime = [];
+      var TopTonight = [];
+    };
+    console.log(TopTonight);
+    console.log("Sorted Orders", TopAllTime);
+    models.Drink.find().exec(function (err, drinks){
+      if (TopTonight.length >= 3) {
+        models.Drink.find({$or: [ {name: TopTonight[0][0]}, {name: TopTonight[1][0]}, {name: TopTonight[2][0]}]}).exec(function (err, topTonight){
+          models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+            res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
+          });
+        });
+      } else {
+        if (TopAllTime.length >= 3) {
+          models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
+            res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks});
           });
         } else {
-          if (TopAllTime.length >= 3) {
-            models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
-              res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks});
-            });
-          } else {
-            res.render('index', {title: 'Shwastinator', me:req.session.user, drinks:drinks});            
-          }
+          res.render('index', {title: 'Shwastinator', me:req.session.user, drinks:drinks});            
         }
-      });
+      }
     });
   });
 };

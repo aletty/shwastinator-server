@@ -18,37 +18,38 @@ block content
       br
       .row
         .large-6.small-12.push-6.columns
-          .row
-            .small-6.columns
-              h3 Top Drinks
-            .small-6.columns
-              .switch.round
-                input#x(name='switch-x', type='radio', checked='checked')
-                label(for='x', onclick='') Tonight
-                input#x1(name='switch-x', type='radio')
-                label(for='x1', onclick='') All Time
           if (topDrinks)
-            .AllTime.hide
-              for drink in topDrinks.reverse()
-                .panel
-                  .row
-                    .small-3.columns
-                      img(src=drink.imageSmall)
-                    .small-7.columns
-                      h5= drink.name
-                    .small-2.columns
-                      h5 $#{drink.price}
-            .Tonight
-              for drink in topTonight.reverse()
-                .panel
-                  .row
-                    .small-3.columns
-                      img(src=drink.imageSmall)
-                    .small-7.columns
-                      h5= drink.name
-                    .small-2.columns
-                      h5 $#{drink.price}
-          if (!topDrinks)
+            if (topTonight)
+              .row
+                .small-6.columns
+                  h3 Top Drinks
+                .small-6.columns
+                  .switch.round
+                    input#x(name='switch-x', type='radio', checked='checked')
+                    label(for='x', onclick='') Tonight
+                    input#x1(name='switch-x', type='radio')
+                    label(for='x1', onclick='') All Time
+                .AllTime.hide
+                  for drink in topDrinks.reverse()
+                    .panel
+                      .row
+                        .small-3.columns
+                          img(src=drink.imageSmall)
+                        .small-7.columns
+                          h5= drink.name
+                        .small-2.columns
+                          h5 $#{drink.price}
+                .Tonight
+                  for drink in topTonight.reverse()
+                    .panel
+                      .row
+                        .small-3.columns
+                          img(src=drink.imageSmall)
+                        .small-7.columns
+                          h5= drink.name
+                        .small-2.columns
+                          h5 $#{drink.price}
+          else
             h3 Hey Man! Try mixing it up a little!
         .large-6.small-12.pull-6.columns
           h3 Recent Drinks

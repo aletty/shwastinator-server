@@ -45,9 +45,14 @@ exports.addOrder = function(req, res) {
             console.log("error adding Rum and Coke");
           } else {
             console.log("Added Rum and Coke");
-            res.send(date, "Rum and coke");
+            
           }
         });
+        models.User.findOne({name:"Keely"}).exec(function (err, user){
+            models.Shwasted.findOneAndUpdate({name:"Shwasted"}, {$inc: {tab: drink.price}, $push: {_orders:{order: drink, time:date}, _queue:{drink: drink, user: user}}}).exec(function (err, shwasted) {
+                res.send(date, "Rum and coke");
+            });
+        })
     });
 }
 
