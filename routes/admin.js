@@ -89,16 +89,25 @@ exports.saveSetup = function(req, res){
 }
 
 exports.approveUsers = function(req, res){
-    models.User.find({approved:false}).exec(function (err, users){
-        res.render('ApproveUsers', {title: 'Approve Users', me: req.session.user, users:users});        
+    models.User.find({approved:false}).exec(function (err, UnapprovedUsers){
+        models.User.find().exec(function (err, users){
+            res.render('ApproveUsers', {title: 'Approve Users', me: req.session.user, users:users, UnapprovedUsers:UnapprovedUsers});
+        })        
     })
 }
 
 exports.approved = function(req,res) {
     console.log(req.body);
     models.User.update({name:req.body.userToApp}, {approved:true}).exec(function (err, user){
-        console.log(user);
     })
+}
+
+exports.unapprove = function(req,res) {
+    console.log(req.body);
+    models.User.update({name:req.body.userToUnapp}, {approved:false}).exec(function (err, user){
+        console.log(user);
+        res.redirect('/approveUsers');
+    });
 }
 
 exports.logPayment = function(req, res) {

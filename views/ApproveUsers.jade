@@ -2,19 +2,32 @@ extends layout
 
 block content
   .row
-    .small-12.columns
+    .large-6.small-12.columns
       .row
         h3 Users That Are Not Approved:
-      for user in users
+      for user in UnapprovedUsers
         .row(id='#{user.name}')
           .small-6.columns#users
             p #{user.name}
           .small-6.columns
             .button.small.approve(name='#{user.name}') Approve!
-
-  script
+    .large-6.small-12.columns
+      .row
+        h3 Users To Unapprove
+      .row
+        select.medium.unapp
+          for user in users
+            option #{user.name}
+      br
+      .row
+        .button.unapprove Unapprove!
+  script.
     $('.approve').click(function(){
       console.log($(this).attr('name'));
       $.post('/approved', {userToApp: $(this).attr('name')});
       return false;
+    })
+    $('.unapprove').click(function(){
+      console.log($('.unapp').val());
+      $.post('/unapprove', {userToUnapp:$('.unapp').val()});
     })
