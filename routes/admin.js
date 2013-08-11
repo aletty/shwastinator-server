@@ -99,14 +99,22 @@ exports.approveUsers = function(req, res){
 exports.approved = function(req,res) {
     console.log(req.body);
     models.User.update({name:req.body.userToApp}, {approved:true}).exec(function (err, user){
+        if (err){
+            notify.push('Error approving ' + req.body.userToApp, 'warning');
+        } else {
+            notify.push( req.body.userToApp + ' approved', 'success');
+        }
     })
 }
 
 exports.unapprove = function(req,res) {
     console.log(req.body);
     models.User.update({name:req.body.userToUnapp}, {approved:false}).exec(function (err, user){
-        console.log(user);
-        res.redirect('/approveUsers');
+        if (err){
+            notify.push('Error Unapproving ' + req.body.userToApp, 'warning');
+        } else {
+            notify.push( req.body.userToApp + ' Unapproved', 'success');
+        }
     });
 }
 
