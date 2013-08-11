@@ -70,6 +70,7 @@ exports.saveSetup = function(req, res){
     models.Liquid.update({},{pump: 0},{multi: true}, function(err, numAffected, raw){
         if (err){
             console.log(err);
+            notify.push('Error saving Shwastinator setup', 'warning');
             return false;
         }
         updatePump(req.body.pump1, 1);
@@ -85,6 +86,7 @@ exports.saveSetup = function(req, res){
         updatePump(req.body.pump11, 11);
         updatePump(req.body.pump12, 12);
         updatePump(req.body.pump13, 13);
+        notify.push('Shwastinator Setup Saved' , 'success');
     });
 }
 
@@ -128,5 +130,10 @@ exports.credit = function(req, res) {
     console.log(req.body);
     models.User.update({name:req.body.userToCredit}, {$inc: {tab: -req.body.amount}}, function callback (err, numAffected) {
   // numAffected is the number of updated documents
+          if (err){
+            notify.push('Error crediting ' + req.body.userToCredit, 'warning');
+        } else {
+            notify.push( req.body.userToCredit + ' credited', 'success');
+        }
     })
 }
