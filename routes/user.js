@@ -103,7 +103,7 @@ exports.logout = function(req,res){
 
 exports.orderDrink = function(req, res){
   models.User.findOne({name:req.session.user.name}).exec(function (err, user){
-    if(user.approved){
+    if(user.approved && user.tab <= 30){
       models.Drink.findOne({name: req.body.drinkOrdered}).populate('_liquids._liquid').exec(function (err, drink) {
         models.User.update({name:req.session.user.name}, {$inc: {tab: drink.price}, $push: {_orders:{order:drink, time:new Date()}}}, function (err, numAffected, raw) {
           if (err) {
@@ -120,7 +120,12 @@ exports.orderDrink = function(req, res){
       });
     }
     else{
-      notify.push(req.session.user.name, "Not approved yet :( Find Keely or Arjun and ask them to approve you", 'warning');
+      if (!user.approved){
+        notify.push(req.session.user.name, "Not approved yet :( Find Keely or Arjun and ask them to approve you", 'warning');
+      };
+      if (user.tab >= 30){
+        notify.push(req.session.user.name, "Settle your tab before ordering more drinks", 'warning');
+      }
     }
   })
 }

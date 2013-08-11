@@ -18,9 +18,7 @@ ADMIN
 - On the setup page have it default to the last liquid settings not just 'Empty'
 - display only drinks that we have ingredients for
 
-- Max tab - then block from ordering
 - Unapprove Users
-
 
 - list ingredients in drinks on order page.... hover over and swipe for the view - frosted with black writing 
 
@@ -69,3 +67,4 @@ COMPLETED
 - Make drinks in orbit clickable
 - Profile Picture change
 - See Other User profiles
+- Max tab - then block from ordering
