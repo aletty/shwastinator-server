@@ -70,7 +70,7 @@ exports.saveSetup = function(req, res){
     models.Liquid.update({},{pump: 0},{multi: true}, function(err, numAffected, raw){
         if (err){
             console.log(err);
-            notify.push('Error saving Shwastinator setup', 'warning');
+            notify.push(req.session.user.name, 'Error saving Shwastinator setup', 'warning');
             return false;
         }
         updatePump(req.body.pump1, 1);
@@ -86,7 +86,7 @@ exports.saveSetup = function(req, res){
         updatePump(req.body.pump11, 11);
         updatePump(req.body.pump12, 12);
         updatePump(req.body.pump13, 13);
-        notify.push('Shwastinator Setup Saved' , 'success');
+        notify.push(req.session.user.name, 'Shwastinator Setup Saved' , 'success');
     });
 }
 
@@ -102,9 +102,9 @@ exports.approved = function(req,res) {
     console.log(req.body);
     models.User.update({name:req.body.userToApp}, {approved:true}).exec(function (err, user){
         if (err){
-            notify.push('Error approving ' + req.body.userToApp, 'warning');
+            notify.push(req.session.user.name, 'Error approving ' + req.body.userToApp, 'warning');
         } else {
-            notify.push( req.body.userToApp + ' approved', 'success');
+            notify.push(req.session.user.name, req.body.userToApp + ' approved', 'success');
         }
     })
 }
@@ -113,9 +113,9 @@ exports.unapprove = function(req,res) {
     console.log(req.body);
     models.User.update({name:req.body.userToUnapp}, {approved:false}).exec(function (err, user){
         if (err){
-            notify.push('Error Unapproving ' + req.body.userToApp, 'warning');
+            notify.push(req.session.user.name, 'Error Unapproving ' + req.body.userToApp, 'warning');
         } else {
-            notify.push( req.body.userToApp + ' Unapproved', 'success');
+            notify.push(req.session.user.name, req.body.userToApp + ' Unapproved', 'success');
         }
     });
 }
@@ -131,9 +131,9 @@ exports.credit = function(req, res) {
     models.User.update({name:req.body.userToCredit}, {$inc: {tab: -req.body.amount}}, function callback (err, numAffected) {
   // numAffected is the number of updated documents
           if (err){
-            notify.push('Error crediting ' + req.body.userToCredit, 'warning');
+            notify.push(req.session.user.name, 'Error crediting ' + req.body.userToCredit, 'warning');
         } else {
-            notify.push( req.body.userToCredit + ' credited', 'success');
+            notify.push(req.session.user.name, req.body.userToCredit + ' credited', 'success');
         }
     })
 }
