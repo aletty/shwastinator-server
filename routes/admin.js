@@ -115,7 +115,7 @@ exports.unapprove = function(req,res) {
         if (err){
             notify.push(req.session.user.name, 'Error Unapproving ' + req.body.userToApp, 'warning');
         } else {
-            notify.push(req.session.user.name, req.body.userToApp + ' Unapproved', 'success');
+            notify.push(req.session.user.name, req.body.userToUnapp + ' Unapproved', 'success');
         }
     });
 }

@@ -33,24 +33,74 @@ exports.profile = function(req, res){
     console.log("Top Tonight",TopTonight);
     console.log("Sorted Orders", TopAllTime);
     models.Drink.find().exec(function (err, drinks){
-      if (TopTonight.length >= 3) {
-        models.Drink.find({$or: [ {name: TopTonight[0][0]}, {name: TopTonight[1][0]}, {name: TopTonight[2][0]}]}).exec(function (err, topTonight){
-          models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
-            res.render('profile', { title: 'Shwastinator', me:me, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
-          });
+      if (TopTonight[0]) {
+        var topTonight = [];
+        models.Drink.findOne({name: TopTonight[0][0]}).exec(function (err, topTonight0){
+          topTonight.push(topTonight0);
+          if (TopTonight[1]){
+            models.Drink.findOne({name: TopTonight[1][0]}).exec(function (err, topTonight1){
+              topTonight.push(topTonight1);
+              if (TopTonight[2]){
+                models.Drink.findOne({name: TopTonight[2][0]}).exec(function (err, topTonight2){
+                  topTonight.push(topTonight2);
+                  TopDrinksOfAllTime(TopAllTime, res, me, drinks, topTonight);;
+                });
+              } else {
+                TopDrinksOfAllTime(TopAllTime, res, me, drinks, topTonight);
+              }
+            });
+          } else{
+            TopDrinksOfAllTime(TopAllTime, res, me, drinks, topTonight);
+          }
         });
       } else {
-        if (TopAllTime.length >= 3) {
-          models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
-            res.render('profile', { title: 'Shwastinator', me:me, drinks:drinks, topDrinks:topDrinks});
-          });
+        if (TopAllTime) {
+          TopDrinksOfAllTime(TopAllTime, res, me, drinks, topTonight);
         } else {
-          res.render('profile', {title: 'Shwastinator', me:me, drinks:drinks});            
+          res.render('profile', {title: 'Shwastinator', me:me, drinks:drinks});                      
         }
       }
     });
   });
 };
+
+function TopDrinksOfAllTime(TopAllTime, res, me, drinks, topTonight) {
+  if (TopAllTime[0]){
+    var topDrinks = []
+    models.Drink.findOne({name: TopAllTime[0][0]}).exec(function (err, alltime0) {
+      topDrinks.push(alltime0);
+      if (TopAllTime[1]){
+        models.Drink.findOne({name: TopAllTime[1][0]}).exec(function (err, alltime1) {
+          topDrinks.push(alltime1);
+          if (TopAllTime[2]){
+            models.Drink.findOne({name: TopAllTime[2][0]}).exec(function (err, alltime2) {
+              topDrinks.push(alltime2);
+              if (topTonight) {
+                res.render('profile', { title: 'Shwastinator', me:me, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
+              } else {
+                res.render('profile', { title: 'Shwastinator', me:me, drinks:drinks, topDrinks:topDrinks});
+              }
+            });
+          } else{
+            if (topTonight) {
+              res.render('profile', { title: 'Shwastinator', me:me, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
+            } else {
+              res.render('profile', { title: 'Shwastinator', me:me, drinks:drinks, topDrinks:topDrinks});
+            }
+          }
+        });
+      } else{
+        if (topTonight) {
+          res.render('profile', { title: 'Shwastinator', me:me, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
+        } else {
+          res.render('profile', { title: 'Shwastinator', me:me, drinks:drinks, topDrinks:topDrinks});
+        }
+      }
+    });
+  } else{
+    res.render('profile', {title: 'Shwastinator', me:me, drinks:drinks});
+  }
+}
 
 exports.profilePic = function (req, res){
   models.User.update({name: req.session.user.name}, {$set: {image: req.body.profilePic}}).exec();
@@ -103,7 +153,7 @@ exports.logout = function(req,res){
 
 exports.orderDrink = function(req, res){
   models.User.findOne({name:req.session.user.name}).exec(function (err, user){
-    if(user.approved && user.tab <= 30){
+    if(user.approved && user.tab <= 30 || user.admin){
       models.Drink.findOne({name: req.body.drinkOrdered}).populate('_liquids._liquid').exec(function (err, drink) {
         models.User.update({name:req.session.user.name}, {$inc: {tab: drink.price}, $push: {_orders:{order:drink, time:new Date()}}}, function (err, numAffected, raw) {
           if (err) {
