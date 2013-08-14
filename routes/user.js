@@ -181,7 +181,7 @@ exports.orderDrink = function(req, res){
 }
 
 exports.allUsers = function(req, res){
-  models.User.find({}).exec(function(err, users){
+  models.User.find({}).sort({name:1}).exec(function(err, users){
     res.render('allUsers', {title: 'All Users',  me: req.session.user, users:users, });
   })
 }

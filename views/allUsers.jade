@@ -6,18 +6,21 @@ block content
       .row
         h2 All Users
       for user in users
-        .row.panel.eachUser(name= '#{user.name}')
-          a(href='/friendProfile/#{user.name}')
-            .small-2.columns
-              img(src= user.image, width='60', height='60')
-            if (me.admin)
-              .small-8.columns
-                h5 #{user.name}
-              .small-2.columns
-                h5 $#{user.tab}
-            else
-              .small-10.columns
-                h5 #{user.name}
+        .row
+          .small-12.columns
+            .panel
+              .row.eachUser(name= '#{user.name}')
+                a(href='/friendProfile/#{user.name}')
+                  .small-2.columns
+                    img(src= user.image, width='60', height='60').th
+                  if (me.admin)
+                    .small-8.columns
+                      h5 #{user.name}
+                    .small-2.columns
+                      h5 $#{user.tab}
+                  else
+                    .small-10.columns
+                      h5 #{user.name}
 
 
   script.
