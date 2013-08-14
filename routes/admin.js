@@ -113,7 +113,7 @@ exports.unapprove = function(req,res) {
     console.log(req.body);
     models.User.update({name:req.body.userToUnapp}, {approved:false}).exec(function (err, user){
         if (err){
-            notify.push(req.session.user.name, 'Error Unapproving ' + req.body.userToApp, 'warning');
+            notify.push(req.session.user.name, 'Error Unapproving ' + req.body.userToUnapp, 'warning');
         } else {
             notify.push(req.session.user.name, req.body.userToUnapp + ' Unapproved', 'success');
         }
