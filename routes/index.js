@@ -31,24 +31,76 @@ exports.index = function(req, res){
     console.log(TopTonight);
     console.log("Sorted Orders", TopAllTime);
     models.Drink.find().exec(function (err, drinks){
-      if (TopTonight && TopTonight.length >= 3) {
-        models.Drink.find({$or: [ {name: TopTonight[0][0]}, {name: TopTonight[1][0]}, {name: TopTonight[2][0]}]}).exec(function (err, topTonight){
-          models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
-            res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
-          });
+      if (TopTonight[0]) {
+        var topTonight = [];
+        models.Drink.findOne({name: TopTonight[0][0]}).exec(function (err, topTonight0){
+          topTonight.push(topTonight0);
+          if (TopTonight[1]){
+            models.Drink.findOne({name: TopTonight[1][0]}).exec(function (err, topTonight1){
+              topTonight.push(topTonight1);
+              if (TopTonight[2]){
+                models.Drink.findOne({name: TopTonight[2][0]}).exec(function (err, topTonight2){
+                  topTonight.push(topTonight2);
+                  TopDrinksOfAllTime(TopAllTime, res, req, drinks, topTonight);;
+                });
+              } else {
+                TopDrinksOfAllTime(TopAllTime, res, req, drinks, topTonight);
+              }
+            });
+          } else{
+            TopDrinksOfAllTime(TopAllTime, res, req, drinks, topTonight);
+          }
         });
       } else {
-        if (TopAllTime && TopAllTime.length >= 3) {
-          models.Drink.find({$or: [ {name: TopAllTime[0][0]}, {name: TopAllTime[1][0]}, {name: TopAllTime[2][0]}]}).exec(function (err, topDrinks){
-            res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks});
-          });
+        if (TopAllTime) {
+          TopDrinksOfAllTime(TopAllTime, res, req, drinks, topTonight);
         } else {
-          res.render('index', {title: 'Shwastinator', me:req.session.user, drinks:drinks});            
+          res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks});             
         }
       }
     });
   });
 };
+
+function TopDrinksOfAllTime(TopAllTime, res, req, drinks, topTonight) {
+  if (TopAllTime[0]){
+    var topDrinks = []
+    models.Drink.findOne({name: TopAllTime[0][0]}).exec(function (err, alltime0) {
+      topDrinks.push(alltime0);
+      if (TopAllTime[1]){
+        models.Drink.findOne({name: TopAllTime[1][0]}).exec(function (err, alltime1) {
+          topDrinks.push(alltime1);
+          if (TopAllTime[2]){
+            models.Drink.findOne({name: TopAllTime[2][0]}).exec(function (err, alltime2) {
+              topDrinks.push(alltime2);
+              if (topTonight) {
+                res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
+              } else {
+                res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks});
+              }
+            });
+          } else{
+            if (topTonight) {
+                res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
+            } else {
+              res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks});
+            }
+          }
+        });
+      } else{
+        if (topTonight) {
+          res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks, topTonight:topTonight});
+        } else {
+          res.render('index', { title: 'Shwastinator', me:req.session.user, drinks:drinks, topDrinks:topDrinks});
+        }
+      }
+    });
+  } else{
+    res.render('index', {title: 'Shwastinator', me:req.session.user, drinks:drinks});
+  }
+}
+
+
 
 function topOrders(_orders) {
   if (_orders){
