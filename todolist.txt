@@ -11,13 +11,10 @@ todo:
 ADMIN
 - edit drinks...?
   - delete drinks...for now
-- view all users tabs  
 - dont allow duplicate drinks
 - Check for duplicate drinks, liquids, usernames
 
 - On the setup page have it default to the last liquid settings not just 'Empty'
-- display only drinks that we have ingredients for
-
 - Unapprove Users
 - max tab override....??
 
@@ -69,3 +66,5 @@ COMPLETED
 - Profile Picture change
 - See Other User profiles
 - Max tab - then block from ordering
+- view all users tabs  
+- clear queue button

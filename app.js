@@ -103,6 +103,7 @@ app.post('/newGuest', checkLoggedIn(), user.newGuest);
 app.get('/queue', checkLoggedIn(), index.queue);
 app.get('/order', dev.addOrder);
 app.post('/unapprove', admin.unapprove);
+app.post('/clearQueue', admin.clearQueue);
 
 server.listen(app.get('port'));
 

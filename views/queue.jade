@@ -2,8 +2,16 @@ extends layout
 
 block content
   .row 
+    if (me.admin)
+      .small-8.columns
+        h1 Queue
+      .small-4.columns
+        .button#clear Clear Queue
+    else
+      .small-12.columns
+        h1 Queue
+  .row
     .small-12.columns
-      h1 Queue
       for drink in shwasted._queue
         .panel
           .row
@@ -15,7 +23,14 @@ block content
               .row
                 h5 #{drink.user.name}
             .small-2.columns
-              if (drink.user.imageSmall)
-                img(src='#{user.user.img}')
+              if (drink.user.img)
+                img(src='#{drink.user.img}')
               else
                 img(src='../default_prof.jpg').th
+
+
+  script.
+    $('#clear').click(function(){
+      console.log("Clear Queue");
+      $.post('/clearQueue');
+    })

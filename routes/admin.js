@@ -137,3 +137,13 @@ exports.credit = function(req, res) {
         }
     })
 }
+
+exports.clearQueue = function(req, res) {
+    models.Shwasted.update({name:'Shwasted'}, {$set: {'_queue':[]}}, function callback (err, numAffected){
+        if (err){
+            notify.push(req.session.user.name, 'Error clearing the Queue' , 'warning');
+        } else {
+            notify.push(req.session.user.name, 'Queue cleared', 'success');
+        }
+    })
+}
