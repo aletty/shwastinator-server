@@ -34,7 +34,7 @@ app.configure(function(){
   app.use(express.static(__dirname + "/public"));
   app.use(app.router);
 
-  var uristring = 
+  var uristring =
     process.env.MONGODB_URI ||
     process.env.MONGOLAB_URI ||
     'mongodb://localhost/shwastinator';
@@ -108,9 +108,9 @@ app.post('/clearQueue', admin.clearQueue);
 server.listen(app.get('port'));
 
 //heroku socket.io config settings
-io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
+io.configure(function () {
+  io.set("transports", ["xhr-polling"]);
+  io.set("polling duration", 10);
 });
 
 //pi communication

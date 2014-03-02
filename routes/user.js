@@ -57,7 +57,7 @@ exports.profile = function(req, res){
         if (TopAllTime) {
           TopDrinksOfAllTime(TopAllTime, res, me, drinks, topTonight);
         } else {
-          res.render('profile', {title: 'Shwastinator', me:me, drinks:drinks});                      
+          res.render('profile', {title: 'Shwastinator', me:me, drinks:drinks});
         }
       }
     });
@@ -115,13 +115,13 @@ exports.signup = function(req, res){
     res.render('signup', {title: 'Shwastinator'});
 }
 
-exports.create = function(req, res){   
+exports.create = function(req, res){
   var hashedPassword = bcrypt.hashSync(req.body.uncryptpass, 10);
   var new_user = new models.User({name: req.body.username, password: hashedPassword, approved: false, tab:0, admin:false, _orders:[], isguest:false});
   new_user.save(function(err){
     if (err) return console.log("error while saving new user" + req.body.username, err);
     req.session.user = new_user;
-    res.send({redirect: '/'}); 
+    res.send({redirect: '/'});
   });
 }
 
@@ -231,7 +231,7 @@ exports.friendProfile = function(req, res){
             res.render('friendProfile', {title: user.name, me: req.session.user, friend: user, topDrinks:topDrinks});
           });
         } else {
-          res.render('friendProfile', {title: user.name, me: req.session.user, friend: user});            
+          res.render('friendProfile', {title: user.name, me: req.session.user, friend: user});
         }
       }
     });
@@ -288,7 +288,7 @@ socket.on('shift queue', function(){
     if (shwasted._queue.length > 0){
       models.Drink.findById(shwasted._queue[0].drink).populate('_liquids._liquid').exec(function (err, drink) {
         pushQueue(drink, ' ');
-      });      
+      });
     }
   });
 });
