@@ -22,8 +22,8 @@ block content
         .row
           .button#addliquid
             | Add to DB
-  
-  script
+
+  script.
     $('#addliquid').click(function(){
       console.log($('#liquid').val(), $('#drinkType').val(), $('#alcoholic').is(':checked'));
       $.post("/addliquid", {liquid:$('#liquid').val(), drinkType:$('#drinkType').val(), alcoholic:$('#alcoholic').is(':checked')});
