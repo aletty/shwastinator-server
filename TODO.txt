@@ -1,0 +1,21 @@
+TODO for building:
+
+Iteration 1: get all 4 working and use it for a night
+- hook up pump 3 and 4
+  - mount
+  - circuitry
+  - tubing
+- secure breadboard
+- drill holes for 2 bottles
+
+Iteration 2: get all 8 working
+- secure the two platforns together
+- hook up pump 5, 6, 7, and 8
+  - mount
+  - circuitry
+  - tubing
+
+
+Iteration 3: Dope-ify
+- plastic sheet over wood for bottles to fit in
+- make tubing pretty
